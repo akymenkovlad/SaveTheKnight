@@ -39,12 +39,10 @@ class SoundManager : NSObject, AVAudioPlayerDelegate {
                 audioPlayer?.delegate = self
             } catch {
                 print("audio player failed to load")
-                
                 startPlaying()
             }
             
             audioPlayer?.prepareToPlay()
-            
             audioPlayer?.play()
             
             trackPosition = (trackPosition + 1) % SoundManager.tracks.count
@@ -56,6 +54,7 @@ class SoundManager : NSObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         startPlaying()
     }
+    
     func toggleMute() -> Bool {
         isMuted = !isMuted
         

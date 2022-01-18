@@ -10,7 +10,7 @@ import SpriteKit
 class HudNode : SKNode {
     private let scoreKey = "SAVEKNIGHT_HIGHSCORE"
     private let scoreNode = SKLabelNode(fontNamed: "Copperplate")
-    private (set) var score : Int = 0
+    private(set) var score : Int = 0
     private var highScore : Int = 0
     private var showingHighScore = false
     
@@ -20,7 +20,7 @@ class HudNode : SKNode {
     private(set) var quitButtonPressed = false
     
     private var healthPoints =  [SKSpriteNode]()
-    private var health: Int = 3
+    private(set) var health: Int = 3
     
     //Setup hud here
     public func setup(size: CGSize) {
@@ -58,18 +58,14 @@ class HudNode : SKNode {
     
     public func addPoint() {
         score += 1
-        
         updateScoreboard()
         
         if score > highScore {
-            
             let defaults = UserDefaults.standard
-            
             defaults.set(score, forKey: scoreKey)
             
             if !showingHighScore {
                 showingHighScore = true
-                
                 scoreNode.run(SKAction.scale(to: 1.25, duration: 0.25))
                 scoreNode.fontColor = SKColor.yellow
             }
@@ -78,7 +74,6 @@ class HudNode : SKNode {
     
     public func resetPoints() {
         score = 0
-        
         updateScoreboard()
         
         if showingHighScore {
@@ -107,6 +102,11 @@ class HudNode : SKNode {
             healthPoints[health].run( .fadeOut(withDuration: 0.2))
             return false
         }
+    }
+    
+    public func addHealth(){
+        healthPoints[health].run(.fadeIn(withDuration: 0.2))
+        health += 1
     }
     
     func touchBeganAtPoint(point: CGPoint) {

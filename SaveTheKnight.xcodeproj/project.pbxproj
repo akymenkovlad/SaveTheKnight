@@ -22,6 +22,8 @@
 		91227EE42795925B00B79865 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE32795925B00B79865 /* SoundManager.swift */; };
 		91227EE62795946E00B79865 /* HudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE52795946E00B79865 /* HudNode.swift */; };
 		91227EE8279596DF00B79865 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE7279596DF00B79865 /* MenuScene.swift */; };
+		91CA1B1C2796B7FA00BB3F21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */; };
+		91CA1B1F2796B81700BB3F21 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1E2796B81700BB3F21 /* Explosion.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		91227EE32795925B00B79865 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		91227EE52795946E00B79865 /* HudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudNode.swift; sourceTree = "<group>"; };
 		91227EE7279596DF00B79865 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		91CA1B1E2796B81700BB3F21 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,7 @@
 		91227EB927954D6500B79865 /* SaveTheKnight */ = {
 			isa = PBXGroup;
 			children = (
+				91CA1B182796B7D700BB3F21 /* Particles */,
 				91227EDC27958CE000B79865 /* Sounds */,
 				91227ED52795615000B79865 /* Resources */,
 				91227ED42795609300B79865 /* Sprites */,
@@ -140,6 +145,15 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		91CA1B182796B7D700BB3F21 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */,
+				91CA1B1E2796B81700BB3F21 /* Explosion.sks */,
+			);
+			path = Particles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -202,7 +216,9 @@
 				91227EDE27958D3300B79865 /* knight.wav in Resources */,
 				91227EE12795922500B79865 /* battle_2.mp3 in Resources */,
 				91227EC627954D6500B79865 /* Main.storyboard in Resources */,
+				91CA1B1F2796B81700BB3F21 /* Explosion.sks in Resources */,
 				91227EC827954D6600B79865 /* Assets.xcassets in Resources */,
+				91CA1B1C2796B7FA00BB3F21 /* Assets.xcassets in Resources */,
 				91227ECB27954D6600B79865 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

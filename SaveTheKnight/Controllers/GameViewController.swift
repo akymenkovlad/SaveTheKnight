@@ -13,16 +13,18 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         SoundManager.sharedInstance.startPlaying()
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         let sceneNode = MenuScene(size: view.frame.size)
         sceneNode.scaleMode = .aspectFill
         
         if let view = self.view as! SKView? {
             view.presentScene(sceneNode)
             view.ignoresSiblingOrder = true
-
+            
             view.showsPhysics = true
             view.showsFPS = true
             view.showsNodeCount = true
@@ -30,12 +32,12 @@ class GameViewController: UIViewController {
     }
     
     override var shouldAutorotate: Bool {
-        return false
+        return true
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            return .landscape
         } else {
             return .all
         }

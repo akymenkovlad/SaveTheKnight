@@ -15,8 +15,8 @@ public class KnightSprite : SKSpriteNode {
     private let movementSpeed: CGFloat = 300
     private var timeSinceLastHit: TimeInterval = 2
     private let maxFlailTime:  TimeInterval = 2
-    private var currentArrowHits = 0
-    private let maxArrowHits = 3
+    private var currentHits = 0
+    private let maxHits = 3
     
     public static func newInstance() -> KnightSprite {
         let knight = KnightSprite(color: .brown, size: CGSize(width: 30, height: 50))
@@ -61,13 +61,13 @@ public class KnightSprite : SKSpriteNode {
         }
     }
     
-    public func hitByArrow() {
-        currentArrowHits += 1
-        if currentArrowHits < maxArrowHits {
+    public func hitByObject() {
+        currentHits += 1
+        if currentHits < maxHits {
             return
         }
         timeSinceLastHit = 0
-        currentArrowHits = 0
+        currentHits = 0
         if SoundManager.sharedInstance.isMuted {
             return
         }
@@ -75,5 +75,9 @@ public class KnightSprite : SKSpriteNode {
             run(SKAction.playSoundFileNamed(knightSound, waitForCompletion: true),
                 withKey: "action_sound_effect")
         }
+    }
+    
+    public func reduceHits(){
+        currentHits -= 1
     }
 }

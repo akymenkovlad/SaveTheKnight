@@ -111,7 +111,7 @@ class MenuScene : SKScene {
     func handleStartButtonClick() {
         let transition = SKTransition.reveal(with: .down, duration: 0.75)
         let gameScene = GameScene(size: size)
-        gameScene.scaleMode = scaleMode
+        gameScene.scaleMode = .aspectFill
         view?.presentScene(gameScene, transition: transition)
     }
     
