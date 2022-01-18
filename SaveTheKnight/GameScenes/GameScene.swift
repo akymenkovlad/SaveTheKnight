@@ -25,9 +25,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var knight: KnightSprite!
     private var coin: CoinSprite!
     private var floorNode: SKShapeNode!
+    private var background = SKSpriteNode(imageNamed: "background")
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
+        
+        background.zPosition = -10
+        background.size = frame.size
+        background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2 )
         
         floorNode = SKShapeNode(rectOf: CGSize(width: size.width, height: 5))
         floorNode.position = CGPoint(x: size.width / 2, y: 50)
@@ -49,15 +54,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(hud)
         addChild(floorNode)
+        addChild(background)
         
         spawnKnight()
         spawnCoin()
         
         var worldFrame = frame
-        worldFrame.origin.x -= 50
         worldFrame.origin.y -= 50
         worldFrame.size.height += 100
-        worldFrame.size.width += 100
         
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: worldFrame)
         self.physicsWorld.contactDelegate = self
@@ -103,7 +107,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         currentArrowSpawnTime += dt
         currentBombSpawnTime += dt
         currentHeartSpawnTime += dt
-        
         if currentArrowSpawnTime > arrowSpawnRate {
             currentArrowSpawnTime = 0
             spawnArrow()
@@ -170,17 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let point = touchPoint {
             hud.touchBeganAtPoint(point: point)
             if !hud.quitButtonPressed {
-                knight.setDestination(destinationX: point.x)
-            }
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touchPoint = touches.first?.location(in: self)
-        
-        if let point = touchPoint {
-            if !hud.quitButtonPressed {
-                knight.setDestination(destinationX: point.x)
+                knight.turnAround()
             }
         }
     }
@@ -227,8 +220,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     self.knight.physicsBody?.categoryBitMask = KnightCategory
                 })
             }
-        case WorldFrameCategory:
-            spawnKnight()
         case HeartCategory:
             knight.reduceHits()
         default:
@@ -266,13 +257,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("something else touched the coin")
         }
     }
-    //MARK: Bomb creation and contact
+    //MARK: Arrow creation and contact
     func spawnArrow() {
-        let arrow = SKShapeNode(rectOf: CGSize(width: 5, height: 35))
+        let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), size: CGSize(width: 15, height: 40))
         arrow.position = CGPoint(x: size.width / 2, y:  size.height / 2)
         arrow.zPosition = 2
-        arrow.fillColor = SKColor.blue
-        arrow.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 5, height: 35))
+        arrow.physicsBody = SKPhysicsBody(rectangleOf: arrow.size)
         arrow.physicsBody?.categoryBitMask = ArrowCategory
         arrow.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory | CoinCategory | HeartCategory | BombCategory
         arrow.physicsBody?.restitution = 0.0
@@ -302,14 +292,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 arrowBody.node?.removeAllActions()
             })
         case KnightCategory,CoinCategory,BombCategory,HeartCategory:
-            arrowBody.collisionBitMask = 0
+            arrowBody.node?.removeFromParent()
+            arrowBody.node?.physicsBody = nil
+            arrowBody.node?.removeAllActions()
+            
         default:
             print("something else touched the arrow")
         }
     }
     //MARK: Bomb creation and contact
     func spawnBomb() {
-        let bomb = SKSpriteNode(color: .cyan, size: CGSize(width: 40, height: 40))
+        let bomb = SKSpriteNode(texture: SKTexture(imageNamed: "bomb"), size: CGSize(width: 40, height: 40))
         bomb.physicsBody = SKPhysicsBody(rectangleOf: bomb.size)
         bomb.physicsBody?.categoryBitMask = BombCategory
         bomb.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory
@@ -340,29 +333,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             actions.append(.fadeAlpha(to: 1, duration: 0.3))
             bombBody.node?.run(.repeatForever(.sequence(actions)))
             bombBody.node?.run(.wait(forDuration: 3.0), completion: {
-                bombBody.node?.addChild(SKEmitterNode(fileNamed: "Explosion")!)
-                bombBody.node?.run(.scale(to: 2, duration: 0.1))
-                bombBody.node?.run(.wait(forDuration: 0.5), completion: {
-                    bombBody.node?.removeFromParent()
-                    bombBody.node?.physicsBody = nil
-                    bombBody.node?.removeAllActions()
+                let explosion = SKEmitterNode(fileNamed: "Explosion")!
+                explosion.position = bombBody.node!.position
+                self.addChild(explosion)
+                self.run(.wait(forDuration: 0.5), completion: {
+                    explosion.removeFromParent()
                 })
-            })
-        case KnightCategory:
-            bombBody.node?.addChild(SKEmitterNode(fileNamed: "Explosion")!)
-            bombBody.node?.run(.scale(to: 2, duration: 0.1))
-            bombBody.node?.run(.wait(forDuration: 0.5), completion: {
                 bombBody.node?.removeFromParent()
                 bombBody.node?.physicsBody = nil
                 bombBody.node?.removeAllActions()
             })
+        case KnightCategory:
+            let explosion = SKEmitterNode(fileNamed: "Explosion")!
+            explosion.position = bombBody.node!.position
+            addChild(explosion)
+            run(.wait(forDuration: 0.5), completion: {
+                explosion.removeFromParent()
+            })
+            bombBody.node?.removeFromParent()
+            bombBody.node?.physicsBody = nil
+            bombBody.node?.removeAllActions()
         default:
             print("something else touched the bomb")
         }
     }
     //MARK: Heart creation and contact
     func spawnHeart() {
-        let heart = SKSpriteNode(color: .red, size: CGSize(width: 30, height: 30))
+        let heart = SKSpriteNode(texture: SKTexture(imageNamed: "heart"), size: CGSize(width: 30, height: 30))
         heart.physicsBody = SKPhysicsBody(rectangleOf: heart.size)
         heart.physicsBody?.categoryBitMask = HeartCategory
         heart.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory

@@ -10,7 +10,7 @@ import SpriteKit
 
 public class CoinSprite : SKSpriteNode {
     public static func newInstance() -> CoinSprite {
-        let coin = CoinSprite(color: .yellow, size: CGSize(width: 30, height: 30))
+        let coin = CoinSprite(texture: SKTexture(imageNamed: "coin"), size: CGSize(width: 30, height: 30))
         
         coin.physicsBody = SKPhysicsBody(rectangleOf: coin.size)
         coin.physicsBody?.categoryBitMask = CoinCategory

@@ -11,19 +11,19 @@ import SpriteKit
 public class KnightSprite : SKSpriteNode {
     
     private let knightSound = "knight.wav"
-    private var destination : CGPoint!
     private let movementSpeed: CGFloat = 300
+    private var isMovingRight: Bool = true
     private var timeSinceLastHit: TimeInterval = 2
     private let maxFlailTime:  TimeInterval = 2
     private var currentHits = 0
     private let maxHits = 3
     
     public static func newInstance() -> KnightSprite {
-        let knight = KnightSprite(color: .brown, size: CGSize(width: 30, height: 50))
+        let knight = KnightSprite(texture: SKTexture(imageNamed: "knight"), size: CGSize(width: 30, height: 50))
         
         knight.zPosition = 1
         knight.physicsBody = SKPhysicsBody(rectangleOf: knight.size)
-        knight.physicsBody?.isDynamic = false
+        knight.physicsBody?.isDynamic = true
         knight.physicsBody?.categoryBitMask = KnightCategory
         knight.physicsBody?.contactTestBitMask = ArrowCategory | WorldFrameCategory
         knight.physicsBody?.restitution = 0
@@ -33,30 +33,24 @@ public class KnightSprite : SKSpriteNode {
     
     public func updatePosition(point : CGPoint) {
         position = point
-        destination = point
     }
     
-    public func setDestination(destinationX : CGFloat) {
-        self.destination.x = destinationX
+    public func turnAround() {
+        isMovingRight = !isMovingRight
     }
     
     public func update(deltaTime : TimeInterval) {
         timeSinceLastHit += deltaTime
         
         if timeSinceLastHit >= maxFlailTime {
-            let distance = abs(destination.x - position.x)
-            let distanceForInterval = movementSpeed * CGFloat(deltaTime)
-            
-            if distance > distanceForInterval {
-                if destination.x < position.x {
-                    //Move left
-                    position.x -= distanceForInterval
-                } else {
-                    //Move right
-                    position.x += distanceForInterval
-                }
+            if isMovingRight {
+                //Move right
+                physicsBody?.velocity.dx = movementSpeed
+                xScale = 1
             } else {
-                position.x = destination.x
+                //Move left
+                physicsBody?.velocity.dx = -movementSpeed
+                xScale = -1
             }
         }
     }

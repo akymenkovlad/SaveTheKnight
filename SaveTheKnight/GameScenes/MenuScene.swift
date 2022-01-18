@@ -11,10 +11,11 @@ class MenuScene : SKScene {
     let startButtonTexture = SKTexture(imageNamed: "button_start")
     let soundButtonTexture = SKTexture(imageNamed: "speaker_on")
     let soundButtonTextureOff = SKTexture(imageNamed: "speaker_off")
-    
+    let shopButtonTexture = SKTexture(imageNamed: "shop")
     
     var startButton : SKSpriteNode! = nil
     var soundButton : SKSpriteNode! = nil
+    var shopButton : SKSpriteNode! = nil
     
     let logoNode = SKLabelNode(text: "Protect the Knight")
     let highScoreNode = SKLabelNode(fontNamed: "CopperPlate")
@@ -42,6 +43,13 @@ class MenuScene : SKScene {
         soundButton.position = CGPoint(x: size.width - soundButton.size.width / 2 - edgeMargin, y: soundButton.size.height / 2 + edgeMargin)
         addChild(soundButton)
         
+        //Setup shop button
+        shopButton = SKSpriteNode(texture: shopButtonTexture)
+        shopButton.xScale = 0.4
+        shopButton.yScale = 0.4
+        shopButton.position = CGPoint(x: size.width/100  + shopButton.size.width / 2 + edgeMargin, y: shopButton.size.height / 2 + edgeMargin)
+        addChild(shopButton)
+        
         //Setup high score node
         let defaults = UserDefaults.standard
         
@@ -66,6 +74,8 @@ class MenuScene : SKScene {
             } else if soundButton.contains(touch.location(in: self)) {
                 selectedButton = soundButton
                 handleSoundButtonHover(isHovering: true)
+            } else if shopButton.contains(touch.location(in: self)) {
+                selectedButton = shopButton
             }
         }
     }
@@ -94,6 +104,10 @@ class MenuScene : SKScene {
                 if (soundButton.contains(touch.location(in: self))) {
                     handleSoundButtonClick()
                 }
+            } else if selectedButton == shopButton {
+                if (shopButton.contains(touch.location(in: self))) {
+                    handleShopButtonClick()
+                }
             }
         }
         
@@ -111,6 +125,13 @@ class MenuScene : SKScene {
     func handleStartButtonClick() {
         let transition = SKTransition.reveal(with: .down, duration: 0.75)
         let gameScene = GameScene(size: size)
+        gameScene.scaleMode = .aspectFill
+        view?.presentScene(gameScene, transition: transition)
+    }
+    
+    func handleShopButtonClick() {
+        let transition = SKTransition.reveal(with: .down, duration: 0.75)
+        let gameScene = ShopScene(size: size)
         gameScene.scaleMode = .aspectFill
         view?.presentScene(gameScene, transition: transition)
     }
