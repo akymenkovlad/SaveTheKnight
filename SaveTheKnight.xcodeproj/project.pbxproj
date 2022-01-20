@@ -25,6 +25,8 @@
 		91227EE8279596DF00B79865 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE7279596DF00B79865 /* MenuScene.swift */; };
 		91CA1B1C2796B7FA00BB3F21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */; };
 		91CA1B1F2796B81700BB3F21 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1E2796B81700BB3F21 /* Explosion.sks */; };
+		91D183DD2798387A0019706E /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D183DC2798387A0019706E /* Grid.swift */; };
+		91D183DF279857820019706E /* ShopHudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D183DE279857820019706E /* ShopHudNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		91227EE7279596DF00B79865 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91CA1B1E2796B81700BB3F21 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		91D183DC2798387A0019706E /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		91D183DE279857820019706E /* ShopHudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopHudNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 				91227ED8279561EC00B79865 /* KnightSprite.swift */,
 				91227EDA2795742C00B79865 /* CoinSprite.swift */,
 				91227EE52795946E00B79865 /* HudNode.swift */,
+				91D183DC2798387A0019706E /* Grid.swift */,
+				91D183DE279857820019706E /* ShopHudNode.swift */,
 			);
 			path = Sprites;
 			sourceTree = "<group>";
@@ -237,10 +243,12 @@
 				91227EC327954D6500B79865 /* GameViewController.swift in Sources */,
 				91227EBB27954D6500B79865 /* AppDelegate.swift in Sources */,
 				91227EE8279596DF00B79865 /* MenuScene.swift in Sources */,
+				91D183DD2798387A0019706E /* Grid.swift in Sources */,
 				91227ED9279561EC00B79865 /* KnightSprite.swift in Sources */,
 				91227ED72795616100B79865 /* Constants.swift in Sources */,
 				91227EE42795925B00B79865 /* SoundManager.swift in Sources */,
 				91227EDB2795742C00B79865 /* CoinSprite.swift in Sources */,
+				91D183DF279857820019706E /* ShopHudNode.swift in Sources */,
 				911928D7279710F300858CC3 /* ShopScene.swift in Sources */,
 				91227EE62795946E00B79865 /* HudNode.swift in Sources */,
 			);

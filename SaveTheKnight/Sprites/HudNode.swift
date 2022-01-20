@@ -22,6 +22,11 @@ class HudNode : SKNode {
     private var healthPoints =  [SKSpriteNode]()
     private(set) var health: Int = 3
     
+    private var coin : SKSpriteNode!
+    private let coinTexture = SKTexture(imageNamed: "coin")
+    private let coinAmount = SKLabelNode(fontNamed: "Copperplate")
+    private var coins: Int = UserDefaults.standard.value(forKey: "userCoins") as! Int
+    
     //Setup hud here
     public func setup(size: CGSize) {
         let defaults = UserDefaults.standard
@@ -51,19 +56,35 @@ class HudNode : SKNode {
             healthPoints.append(healthNode)
             addChild(healthPoints[i])
         }
+      
+        coin = SKSpriteNode(texture: coinTexture)
+        coin.size = CGSize(width: 30, height: 30)
+        coin.position = CGPoint(x: size.width/20, y: healthPoints[0].position.y - 40)
+        coin.zPosition = 1000
         
+        coinAmount.text = "\(coins)"
+        coinAmount.fontSize = 30
+        coinAmount.position = CGPoint(x: coin.position.x + 25 + coinAmount.frame.width/2, y: healthPoints[0].position.y - 50)
+        coinAmount.zPosition = 1000
+    
         addChild(quitButton)
         addChild(scoreNode)
+        addChild(coin)
+        addChild(coinAmount)
+    }
+    
+    public func updateUserCoins(){
+        let defaults = UserDefaults.standard
+        coins = defaults.value(forKey: "userCoins") as! Int
+        coinAmount.text = "\(coins)"
     }
     
     public func addPoint() {
         score += 1
         updateScoreboard()
-        
         if score > highScore {
             let defaults = UserDefaults.standard
             defaults.set(score, forKey: scoreKey)
-            
             if !showingHighScore {
                 showingHighScore = true
                 scoreNode.run(SKAction.scale(to: 1.25, duration: 0.25))
@@ -75,10 +96,8 @@ class HudNode : SKNode {
     public func resetPoints() {
         score = 0
         updateScoreboard()
-        
         if showingHighScore {
             showingHighScore = false
-            
             scoreNode.run(SKAction.scale(to: 1.0, duration: 0.25))
             scoreNode.fontColor = SKColor.white
         }

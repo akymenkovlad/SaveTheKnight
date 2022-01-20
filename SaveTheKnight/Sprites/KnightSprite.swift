@@ -19,7 +19,9 @@ public class KnightSprite : SKSpriteNode {
     private let maxHits = 3
     
     public static func newInstance() -> KnightSprite {
-        let knight = KnightSprite(texture: SKTexture(imageNamed: "knight"), size: CGSize(width: 30, height: 50))
+        let defaults = UserDefaults.standard
+        
+        let knight = KnightSprite(texture: SKTexture(imageNamed: defaults.string(forKey: CharacterKey) ?? "knight"), size: CGSize(width: 30, height: 50))
         
         knight.zPosition = 1
         knight.physicsBody = SKPhysicsBody(rectangleOf: knight.size)
@@ -27,7 +29,8 @@ public class KnightSprite : SKSpriteNode {
         knight.physicsBody?.categoryBitMask = KnightCategory
         knight.physicsBody?.contactTestBitMask = ArrowCategory | WorldFrameCategory
         knight.physicsBody?.restitution = 0
-        
+        knight.physicsBody?.mass = 1000.0
+
         return knight
     }
     

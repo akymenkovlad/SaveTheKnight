@@ -14,7 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var currentArrowSpawnTime : TimeInterval = 0
     private var arrowSpawnRate : TimeInterval = 0.7
     private var currentBombSpawnTime : TimeInterval = 0
-    private var bombSpawnRate : TimeInterval = 10
+    private var bombSpawnRate : TimeInterval = 20
     private var currentHeartSpawnTime : TimeInterval = 0
     private var heartSpawnRate : TimeInterval = 15
     
@@ -45,10 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hud.setup(size: size)
         
         hud.quitButtonAction = {
-            let transition = SKTransition.reveal(with: .up, duration: 0.75)
-            let gameScene = MenuScene(size: self.size)
-            gameScene.scaleMode = self.scaleMode
-            self.view?.presentScene(gameScene, transition: transition)
+            self.moveToMenu()
             self.hud.quitButtonAction = nil
         }
         
@@ -68,6 +65,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody?.categoryBitMask = WorldFrameCategory
     }
     
+    func moveToMenu() {
+        let transition = SKTransition.reveal(with: .up, duration: 0.75)
+        let gameScene = MenuScene(size: self.size)
+        gameScene.scaleMode = self.scaleMode
+        self.view?.presentScene(gameScene, transition: transition)
+    }
     //MARK: Updating scene
     override func update(_ currentTime: TimeInterval) {
         let score = hud.score
@@ -75,38 +78,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if self.lastUpdateTime == 0 {
             self.lastUpdateTime = currentTime
         }
-        switch score {
-        case 0...10:
-            arrowSpawnRate = ArrowSpawnRate
-            bombSpawnRate = BombSpawnRate
-        case 11...20:
-            arrowSpawnRate = ArrowSpawnRate - 0.1
-            bombSpawnRate = BombSpawnRate - 1
-        case 21...30:
-            arrowSpawnRate = ArrowSpawnRate - 0.2
-            bombSpawnRate = BombSpawnRate - 2
-        case 31...40:
-            arrowSpawnRate = ArrowSpawnRate - 0.3
-            bombSpawnRate = BombSpawnRate - 3
-        case 41...50:
-            arrowSpawnRate = ArrowSpawnRate - 0.4
-            bombSpawnRate = BombSpawnRate - 4
-        case 51...60:
-            arrowSpawnRate = ArrowSpawnRate - 0.5
-            bombSpawnRate = BombSpawnRate - 5
-        case 61...70:
-            arrowSpawnRate = ArrowSpawnRate - 0.6
-            bombSpawnRate = BombSpawnRate - 6
-        default:
-            break
-        }
+        updateGameSpeed(with: score)
         // Calculate time since last update
         let dt = currentTime - self.lastUpdateTime
         self.lastUpdateTime = currentTime
         // Update the Spawn Timer
         currentArrowSpawnTime += dt
         currentBombSpawnTime += dt
-        currentHeartSpawnTime += dt
         if currentArrowSpawnTime > arrowSpawnRate {
             currentArrowSpawnTime = 0
             spawnArrow()
@@ -115,9 +93,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             currentBombSpawnTime = 0
             spawnBomb()
         }
-        if currentHeartSpawnTime > heartSpawnRate {
-            currentHeartSpawnTime = 0
-            if hud.health < 3 {
+        if hud.health < 3 {
+            currentHeartSpawnTime += dt
+            if currentHeartSpawnTime > heartSpawnRate {
+                currentHeartSpawnTime = 0
                 spawnHeart()
             }
         }
@@ -167,6 +146,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return randomPosition
     }
     
+    func updateGameSpeed(with score: Int){
+        let level = score / 5
+        arrowSpawnRate = ArrowSpawnRate - 0.05 * Double(level)
+        bombSpawnRate = BombSpawnRate - 1 * Double(level)
+    }
     //MARK: Handling touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchPoint = touches.first?.location(in: self)
@@ -216,8 +200,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             knight.hitByObject()
             if hud.isLose() {
                 knight.physicsBody?.categoryBitMask = 0
-                run(.wait(forDuration: 2.0), completion: {
-                    self.knight.physicsBody?.categoryBitMask = KnightCategory
+                run(.wait(forDuration: 1), completion: {
+                    self.moveToMenu()
                 })
             }
         case HeartCategory:
@@ -248,6 +232,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch otherBody.categoryBitMask {
         case KnightCategory:
             hud.addPoint()
+            let coins = UserDefaults.standard.value(forKey: "userCoins") as! Int
+            UserDefaults.standard.set(coins+1, forKey: "userCoins")
+            print("Coins:\(coins+1)")
+            hud.updateUserCoins()
             fallthrough
         case WorldFrameCategory:
             coinBody.node?.removeFromParent()
@@ -320,7 +308,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == BombCategory {
             otherBody = contact.bodyB
             bombBody = contact.bodyA
-            
         } else {
             otherBody = contact.bodyA
             bombBody = contact.bodyB
@@ -386,9 +373,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch otherBody.categoryBitMask {
         case FloorCategory:
             var actions = [SKAction]()
-            actions.append(.wait(forDuration: 1))
-            actions.append(.fadeAlpha(to: 0.5, duration: 0.3))
-            actions.append(.fadeAlpha(to: 1, duration: 0.3))
+            actions.append(.fadeAlpha(to: 0.5, duration: 0.5))
+            actions.append(.fadeAlpha(to: 1, duration: 0.5))
             heartBody.node?.run(.repeatForever(.sequence(actions)))
             heartBody.node?.run(.wait(forDuration: 5.0), completion: {
                 heartBody.node?.removeFromParent()

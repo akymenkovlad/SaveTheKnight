@@ -45,9 +45,9 @@ class MenuScene : SKScene {
         
         //Setup shop button
         shopButton = SKSpriteNode(texture: shopButtonTexture)
-        shopButton.xScale = 0.4
-        shopButton.yScale = 0.4
-        shopButton.position = CGPoint(x: size.width/100  + shopButton.size.width / 2 + edgeMargin, y: shopButton.size.height / 2 + edgeMargin)
+        shopButton.xScale = 0.2
+        shopButton.yScale = 0.2
+        shopButton.position = CGPoint(x: size.width / 20, y: shopButton.size.height / 2 + edgeMargin)
         addChild(shopButton)
         
         //Setup high score node
@@ -91,13 +91,10 @@ class MenuScene : SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            
             if selectedButton == startButton {
-                
                 if (startButton.contains(touch.location(in: self))) {
                     handleStartButtonClick()
                 }
-                
             } else if selectedButton == soundButton {
                 handleSoundButtonHover(isHovering: false)
                 
@@ -110,7 +107,6 @@ class MenuScene : SKScene {
                 }
             }
         }
-        
         selectedButton = nil
     }
     

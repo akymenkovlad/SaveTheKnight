@@ -17,6 +17,9 @@ let HeartCategory: UInt32 = 0x1 << 7
 
 let ScoreKey = "SAVEKNIGHT_HIGHSCORE"
 let MuteKey = "SAVEKNIGHT_MUTED"
+let CharacterKey = "CHARACTER_TEXTURE"
+let TexturesKey = "TEXTURES"
 
-let ArrowSpawnRate = 0.7
-let BombSpawnRate = 10.0
+let ArrowSpawnRate = 1.0
+let BombSpawnRate = 20.0
+

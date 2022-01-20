@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         SoundManager.sharedInstance.startPlaying()
+        UserDefaults.standard.register(defaults: ["userCoins":0])
     }
     
     override func viewDidLayoutSubviews() {
@@ -22,6 +23,12 @@ class GameViewController: UIViewController {
         sceneNode.scaleMode = .aspectFill
         
         if let view = self.view as! SKView? {
+            if let currentScene = view.scene {
+                print("Current scene is: \(currentScene)")
+            }
+            else {
+                print("Current scene is nil")
+            }
             view.presentScene(sceneNode)
             view.ignoresSiblingOrder = true
             
