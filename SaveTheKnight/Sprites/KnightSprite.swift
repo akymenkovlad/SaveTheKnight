@@ -11,6 +11,13 @@ import SpriteKit
 public class KnightSprite : SKSpriteNode {
     
     private let knightSound = "knight.wav"
+    private let walkFrames = [
+        SKTexture(imageNamed: "sans_1"),
+        SKTexture(imageNamed: "sans_2"),
+        SKTexture(imageNamed: "sans_3"),
+        SKTexture(imageNamed: "sans_4")
+    ]
+    private let walkingActionKey = "action_walking"
     private let movementSpeed: CGFloat = 300
     private var isMovingRight: Bool = true
     private var timeSinceLastHit: TimeInterval = 2
@@ -21,7 +28,7 @@ public class KnightSprite : SKSpriteNode {
     public static func newInstance() -> KnightSprite {
         let defaults = UserDefaults.standard
         
-        let knight = KnightSprite(texture: SKTexture(imageNamed: defaults.string(forKey: CharacterKey) ?? "knight"), size: CGSize(width: 30, height: 50))
+        let knight = KnightSprite(texture: SKTexture(imageNamed: defaults.string(forKey: CharacterKey) ?? "knight"), size: CGSize(width: 45, height: 70))
         
         knight.zPosition = 1
         knight.physicsBody = SKPhysicsBody(rectangleOf: knight.size)
@@ -30,7 +37,7 @@ public class KnightSprite : SKSpriteNode {
         knight.physicsBody?.contactTestBitMask = ArrowCategory | WorldFrameCategory
         knight.physicsBody?.restitution = 0
         knight.physicsBody?.mass = 1000.0
-
+        
         return knight
     }
     
@@ -44,7 +51,15 @@ public class KnightSprite : SKSpriteNode {
     
     public func update(deltaTime : TimeInterval) {
         timeSinceLastHit += deltaTime
-        
+        if action(forKey: walkingActionKey) == nil {
+            let walkingAction = SKAction.repeatForever(
+                SKAction.animate(with: walkFrames,
+                                 timePerFrame: 0.1,
+                                 resize: false,
+                                 restore: true))
+            
+            run(walkingAction, withKey:walkingActionKey)
+        }
         if timeSinceLastHit >= maxFlailTime {
             if isMovingRight {
                 //Move right

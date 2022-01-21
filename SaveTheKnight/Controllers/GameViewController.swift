@@ -21,14 +21,9 @@ class GameViewController: UIViewController {
         super.viewDidLayoutSubviews()
         let sceneNode = MenuScene(size: view.frame.size)
         sceneNode.scaleMode = .aspectFill
+        sceneNode.transitonDelegate = self as TransitionDelegate
         
         if let view = self.view as! SKView? {
-            if let currentScene = view.scene {
-                print("Current scene is: \(currentScene)")
-            }
-            else {
-                print("Current scene is nil")
-            }
             view.presentScene(sceneNode)
             view.ignoresSiblingOrder = true
             
@@ -53,4 +48,15 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+}
+extension GameViewController: TransitionDelegate {
+    func goToShop() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CharacterSkinCollectionViewController") as! CharacterSkinCollectionViewController
+        vc.modalTransitionStyle = .coverVertical
+        vc.modalPresentationStyle = .fullScreen
+        let navController = UINavigationController(rootViewController: vc)
+        self.present(navController, animated: true, completion: nil)
+    }
+    
 }

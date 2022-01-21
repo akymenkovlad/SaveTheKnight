@@ -7,6 +7,10 @@
 
 import SpriteKit
 
+protocol TransitionDelegate: SKSceneDelegate {
+    func goToShop()
+}
+
 class MenuScene : SKScene {
     let startButtonTexture = SKTexture(imageNamed: "button_start")
     let soundButtonTexture = SKTexture(imageNamed: "speaker_on")
@@ -21,6 +25,7 @@ class MenuScene : SKScene {
     let highScoreNode = SKLabelNode(fontNamed: "CopperPlate")
     
     var selectedButton : SKSpriteNode?
+    weak var transitonDelegate: TransitionDelegate?
     
     override func sceneDidLoad() {
         backgroundColor = SKColor(red:169/255.0, green:169/255.0, blue:169/255.0, alpha:1.0)
@@ -122,14 +127,14 @@ class MenuScene : SKScene {
         let transition = SKTransition.reveal(with: .down, duration: 0.75)
         let gameScene = GameScene(size: size)
         gameScene.scaleMode = .aspectFill
+        gameScene.transitonDelegate = transitonDelegate
         view?.presentScene(gameScene, transition: transition)
     }
     
     func handleShopButtonClick() {
-        let transition = SKTransition.reveal(with: .down, duration: 0.75)
-        let gameScene = ShopScene(size: size)
-        gameScene.scaleMode = .aspectFill
-        view?.presentScene(gameScene, transition: transition)
+        guard let delegate = transitonDelegate else { return }
+        delegate.goToShop()
+        return
     }
     
     func handleSoundButtonClick() {

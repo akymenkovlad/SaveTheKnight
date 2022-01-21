@@ -1,24 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameViewController" id="BV1-FR-VrT" customClass="GameViewController" customModule="Save_the_Knight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="80" y="24"/>
+        </scene>
+        <!--Shop-->
+        <scene sceneID="szy-DK-lF7">
+            <objects>
+                <collectionViewController storyboardIdentifier="CharacterSkinCollectionViewController" id="Acv-0l-VFd" customClass="CharacterSkinCollectionViewController" customModule="Save_the_Knight" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="XTY-Gr-4UW">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PuE-QQ-rPX">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="characterSkin" id="eJX-Ho-Fci" customClass="CharacterSkinCollectionViewCell" customModule="Save_the_Knight" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="q8J-iL-xac">
+                                    <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-Db-HWs">
+                                            <rect key="frame" x="50" y="10" width="150" height="175"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="175" id="3tH-NL-B5T"/>
+                                                <constraint firstAttribute="width" constant="150" id="EQg-sm-hx8"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-TJ-Bqp">
+                                            <rect key="frame" x="50" y="220" width="150" height="30"/>
+                                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="6RH-he-PgV"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Select"/>
+                                            <connections>
+                                                <action selector="selectButtonTapped:" destination="eJX-Ho-Fci" eventType="touchUpInside" id="daE-GB-QTW"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yt-N5-Utg">
+                                            <rect key="frame" x="50" y="195" width="150" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xw5-5d-EBR">
+                                            <rect key="frame" x="50" y="260" width="150" height="30"/>
+                                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="RCk-i4-Mq1"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Buy"/>
+                                            <connections>
+                                                <action selector="buyButtonTapped:" destination="eJX-Ho-Fci" eventType="touchUpInside" id="8z4-cG-EbS"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0yt-N5-Utg" firstAttribute="top" secondItem="ihj-Db-HWs" secondAttribute="bottom" constant="10" id="2rO-Gf-M8h"/>
+                                        <constraint firstItem="SSJ-TJ-Bqp" firstAttribute="leading" secondItem="q8J-iL-xac" secondAttribute="leading" constant="50" id="8Dw-aJ-5rl"/>
+                                        <constraint firstItem="xw5-5d-EBR" firstAttribute="leading" secondItem="q8J-iL-xac" secondAttribute="leading" constant="50" id="Ard-au-eyh"/>
+                                        <constraint firstItem="xw5-5d-EBR" firstAttribute="top" secondItem="SSJ-TJ-Bqp" secondAttribute="bottom" constant="10" id="Coj-Vw-78D"/>
+                                        <constraint firstItem="ihj-Db-HWs" firstAttribute="top" secondItem="q8J-iL-xac" secondAttribute="top" constant="10" id="Msn-6v-1e5"/>
+                                        <constraint firstAttribute="trailing" secondItem="0yt-N5-Utg" secondAttribute="trailing" constant="50" id="Oto-ci-y6z"/>
+                                        <constraint firstAttribute="trailing" secondItem="SSJ-TJ-Bqp" secondAttribute="trailing" constant="50" id="Q6U-AU-aQh"/>
+                                        <constraint firstAttribute="trailing" secondItem="xw5-5d-EBR" secondAttribute="trailing" constant="50" id="YI4-qW-daW"/>
+                                        <constraint firstAttribute="trailing" secondItem="ihj-Db-HWs" secondAttribute="trailing" constant="50" id="dAL-wo-EaK"/>
+                                        <constraint firstItem="ihj-Db-HWs" firstAttribute="leading" secondItem="q8J-iL-xac" secondAttribute="leading" constant="50" id="e9R-yL-5VF"/>
+                                        <constraint firstItem="0yt-N5-Utg" firstAttribute="leading" secondItem="q8J-iL-xac" secondAttribute="leading" constant="50" id="i4L-UD-6KG"/>
+                                        <constraint firstAttribute="bottom" secondItem="xw5-5d-EBR" secondAttribute="bottom" constant="10" id="nwY-El-hga"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <size key="customSize" width="250" height="300"/>
+                                <connections>
+                                    <outlet property="buyButton" destination="xw5-5d-EBR" id="YXg-rM-49X"/>
+                                    <outlet property="characterSkinImageView" destination="ihj-Db-HWs" id="XtV-9e-idS"/>
+                                    <outlet property="infoLabel" destination="0yt-N5-Utg" id="C8s-J7-X0C"/>
+                                    <outlet property="selectButton" destination="SSJ-TJ-Bqp" id="oZB-0t-0Cw"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Acv-0l-VFd" id="7zN-Z6-EGI"/>
+                            <outlet property="delegate" destination="Acv-0l-VFd" id="lMw-E6-zwm"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Shop" id="qBu-D5-f6w">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="OIr-8Z-TmC">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="7uu-aw-2DY">
+                                <rect key="frame" x="60" y="4.5" width="100" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.backward" catalog="system" title="Back"/>
+                                <connections>
+                                    <action selector="returnToMenu:" destination="Acv-0l-VFd" eventType="touchUpInside" id="cp1-1r-WnU"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="ndk-p4-vZ3">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="CTo-LL-fTK">
+                                <rect key="frame" x="736" y="5" width="100" height="34.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="coinAmount" destination="CTo-LL-fTK" id="QIF-3g-eYe"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8H6-Hi-Cov" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750.66964285714278" y="776.81159420289862"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Do9-gJ-e03">
+            <objects>
+                <navigationController storyboardIdentifier="ShopNavigationController" id="M4Z-dJ-acR" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aG6-fK-8Wg">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Acv-0l-VFd" kind="relationship" relationship="rootViewController" id="ctl-Ck-cJK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BZ7-Pm-wd9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="777"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

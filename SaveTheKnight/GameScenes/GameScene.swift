@@ -10,6 +10,8 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    weak var transitonDelegate: TransitionDelegate?
+    
     private var lastUpdateTime : TimeInterval = 0
     private var currentArrowSpawnTime : TimeInterval = 0
     private var arrowSpawnRate : TimeInterval = 0.7
@@ -66,9 +68,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func moveToMenu() {
-        let transition = SKTransition.reveal(with: .up, duration: 0.75)
+        let transition = SKTransition.reveal(with: .up, duration: 0.5)
         let gameScene = MenuScene(size: self.size)
         gameScene.scaleMode = self.scaleMode
+        gameScene.transitonDelegate = transitonDelegate
         self.view?.presentScene(gameScene, transition: transition)
     }
     //MARK: Updating scene
@@ -247,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     //MARK: Arrow creation and contact
     func spawnArrow() {
-        let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), size: CGSize(width: 15, height: 40))
+        let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), size: CGSize(width: 25, height: 50))
         arrow.position = CGPoint(x: size.width / 2, y:  size.height / 2)
         arrow.zPosition = 2
         arrow.physicsBody = SKPhysicsBody(rectangleOf: arrow.size)
@@ -255,7 +258,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         arrow.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory | CoinCategory | HeartCategory | BombCategory
         arrow.physicsBody?.restitution = 0.0
         arrow.position = CGPoint(x: createRandomPosition(), y: size.height)
-        
+        print(arrow.position)
+        let fire = SKEmitterNode(fileNamed: "Fire")!
+        arrow.addChild(fire)
+        fire.position = CGPoint(x: 0, y: -arrow.size.height / 2)
+        print(fire.position)
         addChild(arrow)
     }
     
@@ -274,7 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         switch otherBody.categoryBitMask {
         case FloorCategory:
-            arrowBody.node?.run(.wait(forDuration: 0.2), completion: {
+            arrowBody.node?.run(.wait(forDuration: 0.5), completion: {
                 arrowBody.node?.removeFromParent()
                 arrowBody.node?.physicsBody = nil
                 arrowBody.node?.removeAllActions()
