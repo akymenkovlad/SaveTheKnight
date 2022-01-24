@@ -28,15 +28,15 @@ public class KnightSprite : SKSpriteNode {
     public static func newInstance() -> KnightSprite {
         let defaults = UserDefaults.standard
         
-        let knight = KnightSprite(texture: SKTexture(imageNamed: defaults.string(forKey: CharacterKey) ?? "knight"), size: CGSize(width: 45, height: 70))
-        
+        let knight = KnightSprite(texture: SKTexture(imageNamed: defaults.string(forKey: CharacterKey) ?? "knight"), size: CGSize(width: 40, height: 60))
+    
         knight.zPosition = 1
-        knight.physicsBody = SKPhysicsBody(rectangleOf: knight.size)
-        knight.physicsBody?.isDynamic = true
+        knight.physicsBody = SKPhysicsBody(circleOfRadius: knight.size.width / 2)
+        knight.physicsBody?.allowsRotation = false
         knight.physicsBody?.categoryBitMask = KnightCategory
-        knight.physicsBody?.contactTestBitMask = ArrowCategory | WorldFrameCategory
+        knight.physicsBody?.contactTestBitMask = ArrowCategory | WorldFrameCategory | EnemyCategory
         knight.physicsBody?.restitution = 0
-        knight.physicsBody?.mass = 1000.0
+        knight.physicsBody?.mass = 100.0
         
         return knight
     }

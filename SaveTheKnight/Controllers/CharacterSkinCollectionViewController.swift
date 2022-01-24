@@ -28,8 +28,8 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
         defaults.register(defaults: [CharacterKey:"knight"])
         defaults.register(defaults: [TexturesKey:[
             "knight":["name":"Knight","status":"selected","price":0],
-            "mummy":["name":"Mummy","status":"onSale","price":4],
-            "god":["name":"God","status":"onSale","price":3],
+            "mummy":["name":"Mummy","status":"onSale","price":400],
+            "god":["name":"God","status":"onSale","price":500],
         ]])
         
         

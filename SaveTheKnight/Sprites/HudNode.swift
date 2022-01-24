@@ -129,16 +129,6 @@ class HudNode : SKNode {
     }
     
     func touchBeganAtPoint(point: CGPoint) {
-        let containsPoint = quitButton.contains(point)
-        
-        if quitButtonPressed && !containsPoint {
-            quitButtonPressed = false
-        } else if containsPoint {
-            quitButtonPressed = true
-        }
-    }
-    
-    func touchEndedAtPoint(point: CGPoint) {
         if quitButton.contains(point) && quitButtonAction != nil {
             quitButtonAction!()
         }

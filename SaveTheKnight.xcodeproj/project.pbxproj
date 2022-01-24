@@ -24,10 +24,12 @@
 		91227EE8279596DF00B79865 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE7279596DF00B79865 /* MenuScene.swift */; };
 		916962B9279996160086C116 /* CharacterSkinCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916962B8279996160086C116 /* CharacterSkinCollectionViewController.swift */; };
 		916962BB27999B470086C116 /* CharacterSkinCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916962BA27999B470086C116 /* CharacterSkinCollectionViewCell.swift */; };
+		91A4ABC3279EBDC900A1852E /* EnemySprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC2279EBDC900A1852E /* EnemySprite.swift */; };
+		91A4ABC5279ECD0E00A1852E /* GoldBonusSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */; };
+		91A4ABC7279ECD9600A1852E /* InvulnerabilityBonusSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */; };
 		91CA1B1C2796B7FA00BB3F21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */; };
 		91CA1B1F2796B81700BB3F21 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1E2796B81700BB3F21 /* Explosion.sks */; };
 		91CDFE3E279AF79800498589 /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 91CDFE3D279AF79800498589 /* Fire.sks */; };
-		91D183DD2798387A0019706E /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D183DC2798387A0019706E /* Grid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,10 +51,12 @@
 		91227EE7279596DF00B79865 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		916962B8279996160086C116 /* CharacterSkinCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkinCollectionViewController.swift; sourceTree = "<group>"; };
 		916962BA27999B470086C116 /* CharacterSkinCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkinCollectionViewCell.swift; sourceTree = "<group>"; };
+		91A4ABC2279EBDC900A1852E /* EnemySprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemySprite.swift; sourceTree = "<group>"; };
+		91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldBonusSprite.swift; sourceTree = "<group>"; };
+		91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvulnerabilityBonusSprite.swift; sourceTree = "<group>"; };
 		91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91CA1B1E2796B81700BB3F21 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		91CDFE3D279AF79800498589 /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
-		91D183DC2798387A0019706E /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +135,9 @@
 				91227ED8279561EC00B79865 /* KnightSprite.swift */,
 				91227EDA2795742C00B79865 /* CoinSprite.swift */,
 				91227EE52795946E00B79865 /* HudNode.swift */,
-				91D183DC2798387A0019706E /* Grid.swift */,
+				91A4ABC2279EBDC900A1852E /* EnemySprite.swift */,
+				91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */,
+				91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */,
 			);
 			path = Sprites;
 			sourceTree = "<group>";
@@ -244,16 +250,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				91227EC127954D6500B79865 /* GameScene.swift in Sources */,
+				91A4ABC3279EBDC900A1852E /* EnemySprite.swift in Sources */,
 				91227EC327954D6500B79865 /* GameViewController.swift in Sources */,
 				916962B9279996160086C116 /* CharacterSkinCollectionViewController.swift in Sources */,
 				91227EBB27954D6500B79865 /* AppDelegate.swift in Sources */,
+				91A4ABC5279ECD0E00A1852E /* GoldBonusSprite.swift in Sources */,
 				91227EE8279596DF00B79865 /* MenuScene.swift in Sources */,
 				916962BB27999B470086C116 /* CharacterSkinCollectionViewCell.swift in Sources */,
-				91D183DD2798387A0019706E /* Grid.swift in Sources */,
 				91227ED9279561EC00B79865 /* KnightSprite.swift in Sources */,
 				91227ED72795616100B79865 /* Constants.swift in Sources */,
 				91227EE42795925B00B79865 /* SoundManager.swift in Sources */,
 				91227EDB2795742C00B79865 /* CoinSprite.swift in Sources */,
+				91A4ABC7279ECD9600A1852E /* InvulnerabilityBonusSprite.swift in Sources */,
 				91227EE62795946E00B79865 /* HudNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
