@@ -18,6 +18,7 @@ let EnemyCategory: UInt32 = 0x1 << 8
 let GoldBonusCategory: UInt32 = 0x1 << 9
 let InvulnerabilityBonusCategory: UInt32 = 0x1 << 10
 let InvulnerableKnightCategory: UInt32 = 0x1 << 11
+let BonusCoinCategory: UInt32 = 0x1 << 12
 
 let ScoreKey = "SAVEKNIGHT_HIGHSCORE"
 let MuteKey = "SAVEKNIGHT_MUTED"

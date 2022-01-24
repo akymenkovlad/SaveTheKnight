@@ -21,6 +21,7 @@ public class EnemySprite : SKSpriteNode {
         let enemy = EnemySprite(texture: SKTexture(imageNamed: "god"), size: CGSize(width: 40, height: 30))
         
         enemy.zPosition = 1
+        enemy.name = "enemy"
         enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size )
         enemy.physicsBody?.allowsRotation = false
         enemy.physicsBody?.categoryBitMask = EnemyCategory
