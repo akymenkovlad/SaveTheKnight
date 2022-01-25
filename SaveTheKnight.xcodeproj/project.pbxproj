@@ -27,6 +27,7 @@
 		91A4ABC3279EBDC900A1852E /* EnemySprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC2279EBDC900A1852E /* EnemySprite.swift */; };
 		91A4ABC5279ECD0E00A1852E /* GoldBonusSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */; };
 		91A4ABC7279ECD9600A1852E /* InvulnerabilityBonusSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */; };
+		91C93B2A279F061B0022F1C8 /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91C93B29279F061B0022F1C8 /* coin.wav */; };
 		91CA1B1C2796B7FA00BB3F21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */; };
 		91CA1B1F2796B81700BB3F21 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 91CA1B1E2796B81700BB3F21 /* Explosion.sks */; };
 		91CDFE3E279AF79800498589 /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 91CDFE3D279AF79800498589 /* Fire.sks */; };
@@ -54,6 +55,7 @@
 		91A4ABC2279EBDC900A1852E /* EnemySprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemySprite.swift; sourceTree = "<group>"; };
 		91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldBonusSprite.swift; sourceTree = "<group>"; };
 		91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvulnerabilityBonusSprite.swift; sourceTree = "<group>"; };
+		91C93B29279F061B0022F1C8 /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		91CA1B1A2796B7FA00BB3F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91CA1B1E2796B81700BB3F21 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		91CDFE3D279AF79800498589 /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				91227EE02795922500B79865 /* battle_1.mp3 */,
 				91227EDF2795922500B79865 /* battle_2.mp3 */,
 				91227EDD27958D3300B79865 /* knight.wav */,
+				91C93B29279F061B0022F1C8 /* coin.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				91227EDE27958D3300B79865 /* knight.wav in Resources */,
 				91227EE12795922500B79865 /* battle_2.mp3 in Resources */,
 				91227EC627954D6500B79865 /* Main.storyboard in Resources */,
+				91C93B2A279F061B0022F1C8 /* coin.wav in Resources */,
 				91CA1B1F2796B81700BB3F21 /* Explosion.sks in Resources */,
 				91227EC827954D6600B79865 /* Assets.xcassets in Resources */,
 				91CA1B1C2796B7FA00BB3F21 /* Assets.xcassets in Resources */,

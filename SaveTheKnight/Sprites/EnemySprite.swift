@@ -60,5 +60,4 @@ public class EnemySprite : SKSpriteNode {
             xScale = -1
         }
     }
-    
 }

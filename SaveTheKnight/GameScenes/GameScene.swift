@@ -129,7 +129,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         currentGoldBonusSpawnTime += dt
         
         // Spawn objects
-        
         switch level {
         case 2...:
             if currentBombSpawnTime > bombSpawnRate {
@@ -303,6 +302,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case InvulnerableKnightCategory:
             fallthrough
         case KnightCategory:
+            if action(forKey: "action_sound_effect") == nil {
+                run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
+                    withKey: "action_sound_effect")
+            }
             hud.addPoint()
             let coins = UserDefaults.standard.value(forKey: "userCoins") as! Int
             UserDefaults.standard.set(coins+1, forKey: "userCoins")
@@ -364,7 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case CoinCategory,BombCategory,HeartCategory:
             arrowBody.node?.physicsBody?.collisionBitMask = 0
         default:
-            print("something else touched the arrow")
+            break
         }
     }
     //MARK: Bomb creation and contact
@@ -424,7 +427,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bombBody.node?.physicsBody = nil
             bombBody.node?.removeAllActions()
         default:
-            print("something else touched the bomb")
+            break
         }
     }
     //MARK: Heart creation and contact
@@ -525,7 +528,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == InvulnerabilityBonusCategory {
             invBody = contact.bodyA
             otherBody = contact.bodyB
-            
         } else {
             invBody = contact.bodyB
             otherBody = contact.bodyA
@@ -566,7 +568,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == GoldBonusCategory {
             goldBody = contact.bodyA
             otherBody = contact.bodyB
-            
         } else {
             goldBody = contact.bodyB
             otherBody = contact.bodyA
@@ -618,7 +619,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == BonusCoinCategory {
             goldBody = contact.bodyA
             otherBody = contact.bodyB
-            
         } else {
             goldBody = contact.bodyB
             otherBody = contact.bodyA
@@ -626,6 +626,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         switch otherBody.categoryBitMask {
         case KnightCategory,WorldFrameCategory:
+            if action(forKey: "action_sound_effect") == nil {
+                run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
+                    withKey: "action_sound_effect")
+            }
             goldBody.node?.removeFromParent()
             goldBody.node?.physicsBody = nil
             goldBody.node?.removeAllActions()

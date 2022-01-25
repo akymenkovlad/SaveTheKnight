@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CharacterSkinCellDelegate: AnyObject{
+protocol CharacterSkinCellDelegate: AnyObject {
     func selectButtonTapped(at index:IndexPath, with skin:Dictionary<String,Any>)
     func buyButtonTapped(at index:IndexPath, with skin:Dictionary<String,Any>)
 }
@@ -50,7 +50,7 @@ class CharacterSkinCollectionViewCell: UICollectionViewCell {
             selectButton.isEnabled = false
             selectButton.setTitle("Select", for: .normal)
             selectButton.backgroundColor = .systemBlue
-        } else if skin["status"] as! String == "selected"{
+        } else if skin["status"] as! String == "selected" {
             buyButton.isHidden = true
             selectButton.isEnabled = true
             selectButton.isUserInteractionEnabled = false

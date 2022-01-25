@@ -29,7 +29,7 @@ public class KnightSprite : SKSpriteNode {
         let defaults = UserDefaults.standard
         
         let knight = KnightSprite(texture: SKTexture(imageNamed: defaults.string(forKey: CharacterKey) ?? "knight"), size: CGSize(width: 40, height: 60))
-    
+        
         knight.zPosition = 1
         knight.physicsBody = SKPhysicsBody(circleOfRadius: knight.size.width / 2)
         knight.physicsBody?.allowsRotation = false
@@ -89,7 +89,7 @@ public class KnightSprite : SKSpriteNode {
         }
     }
     
-    public func reduceHits(){
+    public func reduceHits() {
         currentHits -= 1
     }
 }

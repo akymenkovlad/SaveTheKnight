@@ -87,7 +87,6 @@ class MenuScene : SKScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            
             if selectedButton == soundButton {
                 handleSoundButtonHover(isHovering: (soundButton.contains(touch.location(in: self))))
             }
@@ -146,5 +145,4 @@ class MenuScene : SKScene {
             soundButton.texture = soundButtonTexture
         }
     }
-    
 }

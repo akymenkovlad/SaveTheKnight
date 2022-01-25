@@ -31,10 +31,9 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
             "mummy":["name":"Mummy","status":"onSale","price":400],
             "god":["name":"God","status":"onSale","price":500],
         ]])
-        
-        
         configureDataForCollectionView()
     }
+    
     func configureDataForCollectionView() {
         let defaults = UserDefaults.standard
         textures = defaults.value(forKey: TexturesKey) as? [String : Dictionary<String, Any>]
@@ -130,5 +129,4 @@ extension CharacterSkinCollectionViewController: CharacterSkinCellDelegate {
             configureDataForCollectionView()
         }
     }
-    
 }
