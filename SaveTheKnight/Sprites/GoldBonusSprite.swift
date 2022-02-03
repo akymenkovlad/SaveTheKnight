@@ -10,13 +10,13 @@ import SpriteKit
 public class GoldBonusSprite : SKSpriteNode {
     public static func newInstance() -> GoldBonusSprite {
         let coin = GoldBonusSprite(texture: SKTexture(imageNamed: "coin"), size: CGSize(width: 40, height: 40))
-        let colorize = SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 0)
-        coin.run(colorize)
         coin.physicsBody = SKPhysicsBody(rectangleOf: coin.size)
         coin.physicsBody?.categoryBitMask = GoldBonusCategory
-        coin.physicsBody?.contactTestBitMask = WorldFrameCategory | KnightCategory | InvulnerableKnightCategory
-        coin.physicsBody?.collisionBitMask = WorldFrameCategory | KnightCategory | InvulnerableKnightCategory
+        coin.physicsBody?.contactTestBitMask = WorldFrameCategory | PlayerCategory | InvulnerablePlayerCategory
+        coin.physicsBody?.collisionBitMask = WorldFrameCategory 
         coin.zPosition = 3
+        
+        coin.addGlow(radius: 25)
         
         return coin
     }

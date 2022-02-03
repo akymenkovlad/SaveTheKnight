@@ -22,15 +22,12 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
         
         let coins = defaults.integer(forKey: "userCoins")
         
-        coinAmount.setTitle("Coins:\(coins)", for: .normal)
+        let quote = "\(coins)"
+        let font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        let attributes = [NSAttributedString.Key.font: font]
+        let attributedCoins = NSAttributedString(string: quote, attributes: attributes)
+        coinAmount.setAttributedTitle(attributedCoins, for: .normal)
         coinAmount.isUserInteractionEnabled = false
-        
-        defaults.register(defaults: [CharacterKey:"knight"])
-        defaults.register(defaults: [TexturesKey:[
-            "knight":["name":"Knight","status":"selected","price":0],
-            "mummy":["name":"Mummy","status":"onSale","price":400],
-            "god":["name":"God","status":"onSale","price":500],
-        ]])
         configureDataForCollectionView()
     }
     
@@ -42,7 +39,18 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
         var collection: [[String:Any]] = []
         for key in keys {
             let values = textures[key]!
-            let skin = ["name": values["name"]!,"column":index,"texture":key,"status": values["status"]!,"price":values["price"]!]
+            let skin = ["name": values["name"]!,
+                        "index":values["index"]!,
+                        "texture":key,
+                        "status": values["status"]!,
+                        "price":values["price"]!,
+                        "texturePack":values["texturePack"]!,
+                        "enemy":values["enemy"]!,
+                        "projectile":values["projectile"]!,
+                        "soil":values["soil"]!,
+                        "background":values["background"]!,
+                        "frames":values["frames"]!
+            ]
             collection.append(skin)
             index += 1
         }
@@ -59,13 +67,10 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return skins.count
     }
     
@@ -74,7 +79,9 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
         if let skinCell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterSkinCollectionViewCell.identifier, for: indexPath) as? CharacterSkinCollectionViewCell {
             guard skins.count > 0 else { return cell }
             skinCell.indexPath = indexPath
-            let skin = skins[indexPath.row]
+            let skin = skins.first(where: { skin in
+                skin["index"] as! Int == indexPath.row
+            })
             skinCell.delegate = self
             skinCell.skin = skin
             skinCell.configure()
@@ -111,7 +118,13 @@ extension CharacterSkinCollectionViewController: CharacterSkinCellDelegate {
         }
         textures[chosenSkin]!["status"] = "selected"
         defaults.set(chosenSkin, forKey: CharacterKey)
+        defaults.set(skin["enemy"], forKey: EnemyKey)
+        defaults.set(skin["projectile"], forKey: ProjectileKey)
+        defaults.set(skin["extraProjectile"], forKey: ExtraProjectileKey)
+        defaults.set(skin["soil"], forKey: SoilKey)
+        defaults.set(skin["background"], forKey: BackgroundKey)
         defaults.set(textures, forKey: TexturesKey)
+        defaults.set(skin["frames"], forKey: FramesKey)
         configureDataForCollectionView()
     }
     

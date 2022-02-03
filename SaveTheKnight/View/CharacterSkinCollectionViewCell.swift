@@ -28,10 +28,12 @@ class CharacterSkinCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         self.buyButton.addTarget(self, action: #selector(buyButtonTapped(_:)), for: .touchUpInside)
         self.selectButton.addTarget(self, action: #selector(selectButtonTapped(_:)), for: .touchUpInside)
+        buyButton.layer.cornerRadius = buyButton.frame.height / 2
+        selectButton.layer.cornerRadius = selectButton.frame.height / 2
     }
     
     func configure() {
-        let image = UIImage(named: skin["texture"] as! String)!
+        let image = UIImage(named: skin["texturePack"] as! String)!
         let price = skin["price"] as! Int
         let name = skin["name"] as! String
         characterSkinImageView.image = image
@@ -41,19 +43,17 @@ class CharacterSkinCollectionViewCell: UICollectionViewCell {
         """
         if skin["status"] as! String == "bought" {
             buyButton.isHidden = true
-            selectButton.isEnabled = true
-            selectButton.isUserInteractionEnabled = true
+            selectButton.isHidden = false
             selectButton.setTitle("Select", for: .normal)
-            selectButton.backgroundColor = .systemBlue
+            selectButton.backgroundColor = .systemYellow
         } else if skin["status"] as! String == "onSale" {
             buyButton.isHidden = false
-            selectButton.isEnabled = false
+            selectButton.isHidden = true
             selectButton.setTitle("Select", for: .normal)
-            selectButton.backgroundColor = .systemBlue
+            selectButton.backgroundColor = .systemYellow
         } else if skin["status"] as! String == "selected" {
             buyButton.isHidden = true
-            selectButton.isEnabled = true
-            selectButton.isUserInteractionEnabled = false
+            selectButton.isHidden = false
             selectButton.setTitle("Selected ✓", for: .normal)
             selectButton.backgroundColor = .systemGreen
         }

@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  SaveTheKnight
+//  SaveThePlayer
 //
 //  Created by Valados on 17.01.2022.
 //
@@ -14,9 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var lastUpdateTime : TimeInterval = 0
     private var currentArrowSpawnTime : TimeInterval = 0
-    private var arrowSpawnRate : TimeInterval = 0.7
-    private var currentBombSpawnTime : TimeInterval = 0
-    private var bombSpawnRate : TimeInterval = 20
+    private var arrowSpawnRate : TimeInterval = 0.5
     private var currentHeartSpawnTime : TimeInterval = 0
     private var heartSpawnRate : TimeInterval = 15
     private var currentEnemySpawnTime : TimeInterval = 10
@@ -28,15 +26,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private let random = GKARC4RandomSource()
     private let edgeMargin: CGFloat = 30.0
+    private let defaults = UserDefaults.standard
+    private var isGoldBonusActive = false
     
     private let hud = HudNode()
-    private var knight: KnightSprite!
+    private var player: PlayerSprite!
     private var enemy: EnemySprite!
     private var coin: CoinSprite!
     private var goldBonus: GoldBonusSprite!
     private var invulnerabilityBonus: InvulnerabiltyBonusSprite!
-    private var floorNode: SKShapeNode!
-    private var background = SKSpriteNode(imageNamed: "background")
+    private var floorNode: SKSpriteNode!
+    private var background = SKSpriteNode(imageNamed: UserDefaults.standard.string(forKey: BackgroundKey) ?? "digger_background")
     
     var swipeUp : UISwipeGestureRecognizer!
     var tap : UITapGestureRecognizer!
@@ -50,9 +50,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.size = frame.size
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2 )
         
-        floorNode = SKShapeNode(rectOf: CGSize(width: size.width, height: 5))
-        floorNode.position = CGPoint(x: size.width / 2, y: 50)
-        floorNode.fillColor = SKColor.red
+        let floorTexture = SKTexture(imageNamed: defaults.string(forKey: SoilKey) ?? "digger_soil")
+        floorNode = SKSpriteNode(texture: floorTexture, size: CGSize(width: size.width + 100, height: 70))
+        floorNode.position = CGPoint(x: size.width / 2, y: 25)
         floorNode.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: -size.width / 2, y: 0), to: CGPoint(x: size.width, y: 0))
         floorNode.physicsBody?.categoryBitMask = FloorCategory
         floorNode.physicsBody?.contactTestBitMask = ArrowCategory
@@ -68,7 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(floorNode)
         addChild(background)
         
-        spawnKnight()
+        spawnPlayer()
         spawnCoin()
         
         var worldFrame = frame
@@ -90,16 +90,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view.addGestureRecognizer(tap)
     }
     @objc func swipedUp(sender: UISwipeGestureRecognizer) {
-        let jumpRange = floorNode.position.y + knight.size.height / 2 + 10
-        if knight.position.y <= jumpRange {
-            let jumpUpAction = SKAction.moveBy(x: 0, y: 100, duration: 0.2)
-            let jumpDownAction = SKAction.moveBy(x: 0, y: -100, duration: 0.5)
+        let jumpRange = floorNode.position.y + player.size.height / 2 + 10
+        if player.position.y <= jumpRange {
+            let jumpUpAction = SKAction.moveBy(x: 0, y: 130, duration: 0.2)
+            let jumpDownAction = SKAction.moveBy(x: 0, y: -130, duration: 0.5)
             let sequence = SKAction.sequence([jumpUpAction,jumpDownAction])
-            knight.run(sequence)
+            player.run(sequence)
         }
     }
     @objc func turn(sender: UISwipeGestureRecognizer) {
-        knight.turnAround()
+        player.turnAround()
     }
     func moveToMenu() {
         let transition = SKTransition.reveal(with: .up, duration: 0.5)
@@ -122,39 +122,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let dt = currentTime - self.lastUpdateTime
         self.lastUpdateTime = currentTime
         // Update the Spawn Timer
-        currentArrowSpawnTime += dt
-        currentBombSpawnTime += dt
-        currentEnemySpawnTime += dt
         currentInvBonusSpawnTime += dt
         currentGoldBonusSpawnTime += dt
         
         // Spawn objects
-        switch level {
-        case 2...:
-            if currentBombSpawnTime > bombSpawnRate {
-                currentBombSpawnTime = 0
-                spawnBomb()
+        if !isGoldBonusActive {
+            currentArrowSpawnTime += dt
+            currentEnemySpawnTime += dt
+            switch level {
+            case 1...:
+                if currentEnemySpawnTime > enemySpawnRate {
+                    currentEnemySpawnTime = 0
+                    enemySpawnRate = TimeInterval(Int.random(in: 5...15))
+                    spawnEnemy()
+                }
+                if let enemy = enemy {
+                    //Update Enemy Position
+                    enemy.update(deltaTime: dt)
+                }
+                fallthrough
+            case 0:
+                if currentArrowSpawnTime > arrowSpawnRate {
+                    currentArrowSpawnTime = 0
+                    spawnArrow()
+                }
+            default:
+                break
             }
-            fallthrough
-        case 1:
-            if currentEnemySpawnTime > enemySpawnRate {
-                currentEnemySpawnTime = 0
-                enemySpawnRate = TimeInterval(Int.random(in: 10...20))
-                spawnEnemy()
-            }
-            if let enemy = enemy {
-                //Update Enemy Position
-                enemy.update(deltaTime: dt)
-            }
-            fallthrough
-        case 0:
-            if currentArrowSpawnTime > arrowSpawnRate {
-                currentArrowSpawnTime = 0
-                spawnArrow()
-            }
-        default:
-            break
         }
+        
         if hud.health < 3 {
             currentHeartSpawnTime += dt
             if currentHeartSpawnTime > heartSpawnRate {
@@ -172,17 +168,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             goldBonusSpawnRate = TimeInterval(Int.random(in: 15...30))
             spawnGoldBonus()
         }
-        //Update Knight Position
-        knight.update(deltaTime: dt)
+        //Update player Position
+        player.update(deltaTime: dt)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.categoryBitMask == ArrowCategory || contact.bodyB.categoryBitMask == ArrowCategory {
             handleArrowContact(contact: contact)
-        }
-        
-        if contact.bodyA.categoryBitMask == BombCategory || contact.bodyB.categoryBitMask == BombCategory {
-            handleBombContact(contact: contact)
         }
         
         if contact.bodyA.categoryBitMask == HeartCategory || contact.bodyB.categoryBitMask == HeartCategory {
@@ -205,8 +197,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.categoryBitMask == EnemyCategory || contact.bodyB.categoryBitMask == EnemyCategory {
             handleEnemyContact(contact: contact)
         }
-        if contact.bodyA.categoryBitMask == KnightCategory || contact.bodyB.categoryBitMask == KnightCategory {
-            handleKnightContact(contact: contact)
+        if contact.bodyA.categoryBitMask == PlayerCategory || contact.bodyB.categoryBitMask == PlayerCategory {
+            handlePlayerContact(contact: contact)
             return
         }
     }
@@ -220,9 +212,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updateGameLevel(with score: Int) -> Int {
-        let level = score / 5
+        let level = score / 10
         arrowSpawnRate = ArrowSpawnRate - 0.05 * Double(level)
-        bombSpawnRate = BombSpawnRate - 1 * Double(level)
         return level
     }
     //MARK: Handling touches
@@ -233,44 +224,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //MARK: Knight creation and contact
+    //MARK: Player creation and contact
     
-    func spawnKnight() {
-        if let currentKnight = knight, children.contains(currentKnight) {
-            knight.removeFromParent()
-            knight.removeAllActions()
-            knight.physicsBody = nil
+    func spawnPlayer() {
+        if let currentPlayer = player, children.contains(currentPlayer) {
+            player.removeFromParent()
+            player.removeAllActions()
+            player.physicsBody = nil
         }
         
-        knight = KnightSprite.newInstance()
-        knight.updatePosition(point: CGPoint(x: frame.midX, y: floorNode.position.y+knight.size.width/2+5))
+        player = PlayerSprite.newInstance()
+        player.addFrames()
+        player.updatePosition(point: CGPoint(x: frame.midX, y: floorNode.position.y + player.size.width/2+1))
         hud.resetPoints()
-        addChild(knight)
+        addChild(player)
     }
     
-    func handleKnightContact(contact: SKPhysicsContact) {
+    func handlePlayerContact(contact: SKPhysicsContact) {
         var otherBody : SKPhysicsBody
         
-        if contact.bodyA.categoryBitMask == KnightCategory {
+        if contact.bodyA.categoryBitMask == PlayerCategory {
             otherBody = contact.bodyB
         } else {
             otherBody = contact.bodyA
         }
         switch otherBody.categoryBitMask {
-        case ArrowCategory,BombCategory,EnemyCategory:
-            knight.hitByObject()
+        case ArrowCategory,EnemyCategory:
+            player.hitByObject()
             if hud.isLose() {
-                knight.physicsBody?.categoryBitMask = 0
+                player.physicsBody?.categoryBitMask = 0
                 run(.wait(forDuration: 1), completion: {
                     self.moveToMenu()
                 })
             }
         case HeartCategory:
-            knight.reduceHits()
+            player.reduceHits()
         case BonusCoinCategory:
             hud.addPoint()
-            let coins = UserDefaults.standard.value(forKey: "userCoins") as! Int
-            UserDefaults.standard.set(coins+1, forKey: "userCoins")
+            let coins = defaults.value(forKey: "userCoins") as! Int
+            defaults.set(coins+1, forKey: "userCoins")
             print("Coins:\(coins+1)")
             hud.updateUserCoins()
         default:
@@ -299,16 +291,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch otherBody.categoryBitMask {
         case FloorCategory:
             coinBody.isDynamic = false
-        case InvulnerableKnightCategory:
-            fallthrough
-        case KnightCategory:
-            if action(forKey: "action_sound_effect") == nil {
-                run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
-                    withKey: "action_sound_effect")
+        case InvulnerablePlayerCategory:
+            if !SoundManager.sharedInstance.isMuted {
+                if action(forKey: "action_sound_effect") == nil {
+                    run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
+                        withKey: "action_sound_effect")
+                }
             }
             hud.addPoint()
-            let coins = UserDefaults.standard.value(forKey: "userCoins") as! Int
-            UserDefaults.standard.set(coins+1, forKey: "userCoins")
+            let coins = defaults.value(forKey: "userCoins") as! Int
+            defaults.set(coins+1, forKey: "userCoins")
+            print("Coins:\(coins+1)")
+            hud.updateUserCoins()
+            coinBody.node?.removeFromParent()
+            coinBody.node?.physicsBody = nil
+            spawnCoin()
+        case PlayerCategory:
+            if !SoundManager.sharedInstance.isMuted {
+                if action(forKey: "action_sound_effect") == nil {
+                    run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
+                        withKey: "action_sound_effect")
+                }
+            }
+            hud.addPoint()
+            let coins = defaults.value(forKey: "userCoins") as! Int
+            defaults.set(coins+1, forKey: "userCoins")
             print("Coins:\(coins+1)")
             hud.updateUserCoins()
             fallthrough
@@ -322,21 +329,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     //MARK: Arrow creation and contact
     func spawnArrow() {
-        let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow"), size: CGSize(width: 25, height: 50))
+        let arrow = SKSpriteNode(texture: SKTexture(imageNamed: defaults.string(forKey: ProjectileKey) ?? "bomb"), size: CGSize(width: 30, height: 40))
         arrow.name = "arrow"
         arrow.position = CGPoint(x: size.width / 2, y:  size.height / 2)
         arrow.zPosition = 2
         arrow.physicsBody = SKPhysicsBody(rectangleOf: arrow.size)
         arrow.physicsBody?.categoryBitMask = ArrowCategory
-        arrow.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory
-        arrow.physicsBody?.collisionBitMask = KnightCategory | FloorCategory
+        arrow.physicsBody?.contactTestBitMask = FloorCategory | PlayerCategory
+        arrow.physicsBody?.collisionBitMask = FloorCategory
         arrow.physicsBody?.restitution = 0.0
         arrow.position = CGPoint(x: createRandomPosition(), y: size.height + 50)
         arrow.physicsBody?.mass = 1
         arrow.physicsBody?.density = 0.1
-        let fire = SKEmitterNode(fileNamed: "Fire")!
-        arrow.addChild(fire)
-        fire.position = CGPoint(x: 0, y: -arrow.size.height / 2)
         addChild(arrow)
     }
     
@@ -360,72 +364,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 arrowBody.node?.physicsBody = nil
                 arrowBody.node?.removeAllActions()
             })
-        case KnightCategory:
+        case PlayerCategory:
             arrowBody.node?.removeFromParent()
             arrowBody.node?.physicsBody = nil
             arrowBody.node?.removeAllActions()
-        case CoinCategory,BombCategory,HeartCategory:
+        case CoinCategory,HeartCategory:
             arrowBody.node?.physicsBody?.collisionBitMask = 0
-        default:
-            break
-        }
-    }
-    //MARK: Bomb creation and contact
-    func spawnBomb() {
-        let bomb = SKSpriteNode(texture: SKTexture(imageNamed: "bomb"), size: CGSize(width: 35, height: 35))
-        bomb.name = "bomb"
-        bomb.physicsBody = SKPhysicsBody(circleOfRadius: bomb.size.width/2)
-        bomb.physicsBody?.categoryBitMask = BombCategory
-        bomb.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory
-        bomb.physicsBody?.collisionBitMask = FloorCategory | KnightCategory
-        bomb.physicsBody?.restitution = 0.0
-        bomb.zPosition = 3
-        bomb.position = CGPoint(x: createRandomPosition(), y: size.height + 50)
-        
-        addChild(bomb)
-    }
-    
-    func handleBombContact(contact: SKPhysicsContact) {
-        var otherBody : SKPhysicsBody
-        var bombBody : SKPhysicsBody
-        
-        if contact.bodyA.categoryBitMask == BombCategory {
-            otherBody = contact.bodyB
-            bombBody = contact.bodyA
-        } else {
-            otherBody = contact.bodyA
-            bombBody = contact.bodyB
-        }
-        
-        switch otherBody.categoryBitMask {
-        case FloorCategory:
-            bombBody.node?.physicsBody?.isDynamic = false
-            var actions = [SKAction]()
-            actions.append(.fadeAlpha(to: 0.5, duration: 0.3))
-            actions.append(.fadeAlpha(to: 1, duration: 0.3))
-            bombBody.node?.run(.repeatForever(.sequence(actions)))
-            bombBody.node?.run(.wait(forDuration: 3.0), completion: {
-                bombBody.node?.run(.scale(to: 2, duration: 0.1))
-                let explosion = SKEmitterNode(fileNamed: "Explosion")!
-                explosion.position = bombBody.node!.position
-                self.addChild(explosion)
-                self.run(.wait(forDuration: 0.5), completion: {
-                    explosion.removeFromParent()
-                    bombBody.node?.removeFromParent()
-                    bombBody.node?.physicsBody = nil
-                    bombBody.node?.removeAllActions()
-                })
-            })
-        case KnightCategory:
-            let explosion = SKEmitterNode(fileNamed: "Explosion")!
-            explosion.position = bombBody.node!.position
-            addChild(explosion)
-            run(.wait(forDuration: 0.5), completion: {
-                explosion.removeFromParent()
-            })
-            bombBody.node?.removeFromParent()
-            bombBody.node?.physicsBody = nil
-            bombBody.node?.removeAllActions()
         default:
             break
         }
@@ -435,8 +379,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let heart = SKSpriteNode(texture: SKTexture(imageNamed: "heart"), size: CGSize(width: 30, height: 30))
         heart.physicsBody = SKPhysicsBody(rectangleOf: heart.size)
         heart.physicsBody?.categoryBitMask = HeartCategory
-        heart.physicsBody?.contactTestBitMask = FloorCategory | KnightCategory | InvulnerableKnightCategory
-        heart.physicsBody?.collisionBitMask = FloorCategory | KnightCategory | InvulnerableKnightCategory
+        heart.physicsBody?.contactTestBitMask = FloorCategory | PlayerCategory | InvulnerablePlayerCategory
+        heart.physicsBody?.collisionBitMask = FloorCategory
         heart.physicsBody?.restitution = 0.0
         heart.zPosition = 3
         heart.position = CGPoint(x: createRandomPosition(), y: size.height)
@@ -468,10 +412,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 heartBody.node?.physicsBody = nil
                 heartBody.node?.removeAllActions()
             })
-        case InvulnerableKnightCategory:
-            knight.reduceHits()
+        case InvulnerablePlayerCategory:
+            player.reduceHits()
             fallthrough
-        case KnightCategory:
+        case PlayerCategory:
             hud.addHealth()
             heartBody.node?.removeFromParent()
             heartBody.node?.physicsBody = nil
@@ -483,7 +427,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Enemy creation and contact
     func spawnEnemy() {
         enemy = EnemySprite.newInstance()
-        if knight.position.x >= frame.midX {
+        if player.position.x >= frame.midX {
             enemy.updatePosition(point: CGPoint(x: frame.minX + enemy.size.width/2 + 5, y: floorNode.position.y + enemy.size.height/2 + 5))
         } else {
             enemy.updatePosition(point: CGPoint(x: frame.maxX - enemy.size.width/2 - 5, y: floorNode.position.y + enemy.size.height/2 + 5))
@@ -506,7 +450,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         switch otherBody.categoryBitMask {
-        case WorldFrameCategory,KnightCategory:
+        case WorldFrameCategory,PlayerCategory:
             enemyBody.node?.removeFromParent()
             enemyBody.node?.physicsBody = nil
             enemyBody.node?.removeAllActions()
@@ -534,16 +478,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         switch otherBody.categoryBitMask {
-        case KnightCategory:
+        case PlayerCategory,InvulnerablePlayerCategory:
             var actions = [SKAction]()
             actions.append(.fadeOut(withDuration: 0.5))
             actions.append(.fadeIn(withDuration: 0.5))
-            knight.run(.repeat(.sequence(actions), count: 5))
-            knight.physicsBody?.categoryBitMask = InvulnerableKnightCategory
-            knight.physicsBody?.collisionBitMask = WorldFrameCategory | FloorCategory | HeartCategory | CoinCategory | GoldBonusCategory | BonusCoinCategory
+            player.run(.repeat(.sequence(actions), count: 5))
+            player.physicsBody?.categoryBitMask = InvulnerablePlayerCategory
             self.run(.wait(forDuration: 5.0), completion: {
-                self.knight.physicsBody?.categoryBitMask = KnightCategory
-                self.knight.physicsBody?.collisionBitMask = ArrowCategory | WorldFrameCategory | EnemyCategory | FloorCategory | HeartCategory | BombCategory | CoinCategory | GoldBonusCategory | InvulnerabilityBonusCategory | BonusCoinCategory
+                self.player.physicsBody?.categoryBitMask = PlayerCategory
             })
             fallthrough
         case WorldFrameCategory:
@@ -574,23 +516,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         switch otherBody.categoryBitMask {
-        case KnightCategory:
+        case PlayerCategory,InvulnerablePlayerCategory:
+            isGoldBonusActive = true
             var actions = [SKAction]()
+            
             let deleteNodes = SKAction.run {
                 var nodeList = [SKNode]()
                 for node in self.children {
-                    if node.name == "bomb" || node.name == "enemy" || node.name == "arrow" {
+                    if node.name == "enemy" || node.name == "arrow" {
                         nodeList.append(node)
                     }
                 }
                 self.removeChildren(in: nodeList)
             }
-            actions.append(deleteNodes)
+            run(deleteNodes)
             actions.append(.run {
                 self.createBonusCoin()
             })
             actions.append(.wait(forDuration: 0.1))
             run(.repeat(.sequence(actions), count: 45))
+            run(.wait(forDuration: 5.0), completion: {
+                self.isGoldBonusActive = false
+            })
             fallthrough
         case WorldFrameCategory:
             goldBody.node?.removeFromParent()
@@ -605,8 +552,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let coin = CoinSprite(texture: SKTexture(imageNamed: "coin"), size: CGSize(width: 30, height: 30))
         coin.physicsBody = SKPhysicsBody(circleOfRadius: coin.size.width/2)
         coin.physicsBody?.categoryBitMask = BonusCoinCategory
-        coin.physicsBody?.contactTestBitMask = WorldFrameCategory | KnightCategory | InvulnerableKnightCategory
-        coin.physicsBody?.collisionBitMask = WorldFrameCategory | KnightCategory | InvulnerableKnightCategory
+        coin.physicsBody?.contactTestBitMask = WorldFrameCategory | PlayerCategory | InvulnerablePlayerCategory
+        coin.physicsBody?.collisionBitMask = WorldFrameCategory
         coin.zPosition = 3
         coin.position = CGPoint(x: createRandomPosition(), y: size.height)
         addChild(coin)
@@ -625,11 +572,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         switch otherBody.categoryBitMask {
-        case KnightCategory,WorldFrameCategory:
-            if action(forKey: "action_sound_effect") == nil {
-                run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
-                    withKey: "action_sound_effect")
+        case InvulnerablePlayerCategory:
+            hud.addPoint()
+            let coins = defaults.value(forKey: "userCoins") as! Int
+            defaults.set(coins+1, forKey: "userCoins")
+            print("Coins:\(coins+1)")
+            hud.updateUserCoins()
+            fallthrough
+        case PlayerCategory:
+            if !SoundManager.sharedInstance.isMuted {
+                if action(forKey: "action_sound_effect") == nil {
+                    run(SKAction.playSoundFileNamed("coin.wav", waitForCompletion: true),
+                        withKey: "action_sound_effect")
+                }
             }
+            fallthrough
+        case WorldFrameCategory:
             goldBody.node?.removeFromParent()
             goldBody.node?.physicsBody = nil
             goldBody.node?.removeAllActions()

@@ -14,8 +14,8 @@ public class CoinSprite : SKSpriteNode {
         
         coin.physicsBody = SKPhysicsBody(circleOfRadius: coin.size.width/2)
         coin.physicsBody?.categoryBitMask = CoinCategory
-        coin.physicsBody?.contactTestBitMask = WorldFrameCategory | KnightCategory | FloorCategory | InvulnerableKnightCategory
-        coin.physicsBody?.collisionBitMask = WorldFrameCategory | KnightCategory | FloorCategory | InvulnerableKnightCategory
+        coin.physicsBody?.contactTestBitMask = WorldFrameCategory | PlayerCategory | FloorCategory | InvulnerablePlayerCategory
+        coin.physicsBody?.collisionBitMask = WorldFrameCategory | FloorCategory 
         coin.zPosition = 3
         
         return coin

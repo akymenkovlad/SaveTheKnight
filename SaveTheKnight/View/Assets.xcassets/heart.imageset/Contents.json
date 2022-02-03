@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "toppng.com-8-bit-heart-pixel-heart-673x601@1x.png",
+      "filename" : "heart.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "toppng.com-8-bit-heart-pixel-heart-673x601@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "toppng.com-8-bit-heart-pixel-heart-673x601@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -39,9 +39,9 @@ class HudNode : SKNode {
         scoreNode.zPosition = 1
         
         quitButton = SKSpriteNode(texture: quitButtonTexture)
-        quitButton.yScale = 0.5
-        quitButton.xScale = 0.5
-        let margin : CGFloat = 5
+        quitButton.yScale = 0.2
+        quitButton.xScale = 0.2
+        let margin : CGFloat = 15
         quitButton.position = CGPoint(x: size.width - quitButton.size.width/2-margin, y: size.height - quitButton.size.height/2-margin)
         quitButton.zPosition = 1000
         

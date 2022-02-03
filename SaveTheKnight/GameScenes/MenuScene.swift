@@ -12,14 +12,16 @@ protocol TransitionDelegate: SKSceneDelegate {
 }
 
 class MenuScene : SKScene {
-    let startButtonTexture = SKTexture(imageNamed: "button_start")
-    let soundButtonTexture = SKTexture(imageNamed: "speaker_on")
-    let soundButtonTextureOff = SKTexture(imageNamed: "speaker_off")
+    let startButtonTexture = SKTexture(imageNamed: "start_button")
+    let soundButtonTexture = SKTexture(imageNamed: "volume_on")
+    let soundButtonTextureOff = SKTexture(imageNamed: "volume_off")
     let shopButtonTexture = SKTexture(imageNamed: "shop")
+    let backgroundTextture = SKTexture(imageNamed: "menu_background")
     
-    var startButton : SKSpriteNode! = nil
-    var soundButton : SKSpriteNode! = nil
-    var shopButton : SKSpriteNode! = nil
+    var startButton: SKSpriteNode! = nil
+    var soundButton: SKSpriteNode! = nil
+    var shopButton: SKSpriteNode! = nil
+    var background: SKSpriteNode! = nil
     
     let logoNode = SKLabelNode(text: "Protect the Knight")
     let highScoreNode = SKLabelNode(fontNamed: "CopperPlate")
@@ -29,6 +31,11 @@ class MenuScene : SKScene {
     
     override func sceneDidLoad() {
         backgroundColor = SKColor(red:169/255.0, green:169/255.0, blue:169/255.0, alpha:1.0)
+        
+        background = SKSpriteNode(texture: backgroundTextture, size: size)
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.zPosition = -100
+        addChild(background)
         
         //Setup logo - label initialized earlier
         logoNode.position = CGPoint(x: size.width / 2, y: size.height / 2 + 150)
@@ -40,19 +47,23 @@ class MenuScene : SKScene {
         //Setup start button
         startButton = SKSpriteNode(texture: startButtonTexture)
         startButton.position = CGPoint(x: size.width / 2, y: size.height / 2 )
+        startButton.xScale = 0.4
+        startButton.yScale = 0.4
         addChild(startButton)
         
-        let edgeMargin : CGFloat = 25
+        let edgeMargin : CGFloat = 20
         //Setup sound button
         soundButton = SKSpriteNode(texture: SoundManager.sharedInstance.isMuted ? soundButtonTextureOff : soundButtonTexture)
+        soundButton.xScale = 0.5
+        soundButton.yScale = 0.5
         soundButton.position = CGPoint(x: size.width - soundButton.size.width / 2 - edgeMargin, y: soundButton.size.height / 2 + edgeMargin)
         addChild(soundButton)
         
         //Setup shop button
         shopButton = SKSpriteNode(texture: shopButtonTexture)
-        shopButton.xScale = 0.2
-        shopButton.yScale = 0.2
-        shopButton.position = CGPoint(x: size.width / 20, y: shopButton.size.height / 2 + edgeMargin)
+        shopButton.xScale = 0.4
+        shopButton.yScale = 0.4
+        shopButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - startButton.size.height - edgeMargin)
         addChild(shopButton)
         
         //Setup high score node
@@ -60,10 +71,10 @@ class MenuScene : SKScene {
         
         let highScore = defaults.integer(forKey: ScoreKey)
         
-        highScoreNode.text = "\(highScore)"
-        highScoreNode.fontSize = 70
-        highScoreNode.verticalAlignmentMode = .top
-        highScoreNode.position = CGPoint(x: size.width / 2, y: startButton.position.y - startButton.size.height / 2 - 50)
+        highScoreNode.text = "HighScore:\(highScore)"
+        highScoreNode.horizontalAlignmentMode = .center
+        highScoreNode.fontSize = 50
+        highScoreNode.position = CGPoint(x: size.width / 2, y: shopButton.position.y - shopButton.size.height / 2 - 50)
         highScoreNode.zPosition = 1
         addChild(highScoreNode)
     }

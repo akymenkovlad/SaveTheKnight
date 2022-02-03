@@ -14,7 +14,7 @@
 		91227EC827954D6600B79865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91227EC727954D6600B79865 /* Assets.xcassets */; };
 		91227ECB27954D6600B79865 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91227EC927954D6600B79865 /* LaunchScreen.storyboard */; };
 		91227ED72795616100B79865 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227ED62795616100B79865 /* Constants.swift */; };
-		91227ED9279561EC00B79865 /* KnightSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227ED8279561EC00B79865 /* KnightSprite.swift */; };
+		91227ED9279561EC00B79865 /* PlayerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227ED8279561EC00B79865 /* PlayerSprite.swift */; };
 		91227EDB2795742C00B79865 /* CoinSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EDA2795742C00B79865 /* CoinSprite.swift */; };
 		91227EDE27958D3300B79865 /* knight.wav in Resources */ = {isa = PBXBuildFile; fileRef = 91227EDD27958D3300B79865 /* knight.wav */; };
 		91227EE12795922500B79865 /* battle_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 91227EDF2795922500B79865 /* battle_2.mp3 */; };
@@ -22,6 +22,7 @@
 		91227EE42795925B00B79865 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE32795925B00B79865 /* SoundManager.swift */; };
 		91227EE62795946E00B79865 /* HudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE52795946E00B79865 /* HudNode.swift */; };
 		91227EE8279596DF00B79865 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE7279596DF00B79865 /* MenuScene.swift */; };
+		913D174227AC02D300DE8E51 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913D174127AC02D300DE8E51 /* Extensions.swift */; };
 		916962B9279996160086C116 /* CharacterSkinCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916962B8279996160086C116 /* CharacterSkinCollectionViewController.swift */; };
 		916962BB27999B470086C116 /* CharacterSkinCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916962BA27999B470086C116 /* CharacterSkinCollectionViewCell.swift */; };
 		91A4ABC3279EBDC900A1852E /* EnemySprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC2279EBDC900A1852E /* EnemySprite.swift */; };
@@ -42,7 +43,7 @@
 		91227EC727954D6600B79865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91227ECA27954D6600B79865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91227ED62795616100B79865 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		91227ED8279561EC00B79865 /* KnightSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnightSprite.swift; sourceTree = "<group>"; };
+		91227ED8279561EC00B79865 /* PlayerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSprite.swift; sourceTree = "<group>"; };
 		91227EDA2795742C00B79865 /* CoinSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinSprite.swift; sourceTree = "<group>"; };
 		91227EDD27958D3300B79865 /* knight.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = knight.wav; sourceTree = "<group>"; };
 		91227EDF2795922500B79865 /* battle_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = battle_2.mp3; sourceTree = "<group>"; };
@@ -50,6 +51,7 @@
 		91227EE32795925B00B79865 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		91227EE52795946E00B79865 /* HudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudNode.swift; sourceTree = "<group>"; };
 		91227EE7279596DF00B79865 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		913D174127AC02D300DE8E51 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		916962B8279996160086C116 /* CharacterSkinCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkinCollectionViewController.swift; sourceTree = "<group>"; };
 		916962BA27999B470086C116 /* CharacterSkinCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkinCollectionViewCell.swift; sourceTree = "<group>"; };
 		91A4ABC2279EBDC900A1852E /* EnemySprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemySprite.swift; sourceTree = "<group>"; };
@@ -134,7 +136,7 @@
 		91227ED42795609300B79865 /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
-				91227ED8279561EC00B79865 /* KnightSprite.swift */,
+				91227ED8279561EC00B79865 /* PlayerSprite.swift */,
 				91227EDA2795742C00B79865 /* CoinSprite.swift */,
 				91227EE52795946E00B79865 /* HudNode.swift */,
 				91A4ABC2279EBDC900A1852E /* EnemySprite.swift */,
@@ -150,6 +152,7 @@
 				91227EBA27954D6500B79865 /* AppDelegate.swift */,
 				91227ED62795616100B79865 /* Constants.swift */,
 				91227EE32795925B00B79865 /* SoundManager.swift */,
+				913D174127AC02D300DE8E51 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -261,8 +264,9 @@
 				91A4ABC5279ECD0E00A1852E /* GoldBonusSprite.swift in Sources */,
 				91227EE8279596DF00B79865 /* MenuScene.swift in Sources */,
 				916962BB27999B470086C116 /* CharacterSkinCollectionViewCell.swift in Sources */,
-				91227ED9279561EC00B79865 /* KnightSprite.swift in Sources */,
+				91227ED9279561EC00B79865 /* PlayerSprite.swift in Sources */,
 				91227ED72795616100B79865 /* Constants.swift in Sources */,
+				913D174227AC02D300DE8E51 /* Extensions.swift in Sources */,
 				91227EE42795925B00B79865 /* SoundManager.swift in Sources */,
 				91227EDB2795742C00B79865 /* CoinSprite.swift in Sources */,
 				91A4ABC7279ECD9600A1852E /* InvulnerabilityBonusSprite.swift in Sources */,
