@@ -34,6 +34,7 @@ class HudNode : SKNode {
         highScore = defaults.integer(forKey: scoreKey)
         
         scoreNode.text = "\(score)"
+        scoreNode.fontColor = .orange
         scoreNode.fontSize = 50
         scoreNode.position = CGPoint(x: size.width / 2, y: size.height - 50)
         scoreNode.zPosition = 1

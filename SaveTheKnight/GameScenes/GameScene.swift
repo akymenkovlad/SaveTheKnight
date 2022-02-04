@@ -133,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case 1...:
                 if currentEnemySpawnTime > enemySpawnRate {
                     currentEnemySpawnTime = 0
-                    enemySpawnRate = TimeInterval(Int.random(in: 5...15))
+                    enemySpawnRate = TimeInterval(Int.random(in: 10...20))
                     spawnEnemy()
                 }
                 if let enemy = enemy {
@@ -253,6 +253,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.hitByObject()
             if hud.isLose() {
                 player.physicsBody?.categoryBitMask = 0
+                player.physicsBody?.velocity.dx = 0
+                player.removeAction(forKey: "action_walking")
                 run(.wait(forDuration: 1), completion: {
                     self.moveToMenu()
                 })
@@ -434,6 +436,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.setDirection()
         }
         addChild(enemy)
+        
+        if !SoundManager.sharedInstance.isMuted {
+            if action(forKey: "enemy_sound_effect") == nil {
+                run(SKAction.playSoundFileNamed(enemy.enemySound, waitForCompletion: true),
+                    withKey: "enemy_sound_effect")
+            }
+        }
     }
     
     func handleEnemyContact(contact: SKPhysicsContact) {

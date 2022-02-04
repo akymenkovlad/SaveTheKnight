@@ -49,7 +49,8 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
                         "projectile":values["projectile"]!,
                         "soil":values["soil"]!,
                         "background":values["background"]!,
-                        "frames":values["frames"]!
+                        "frames":values["frames"]!,
+                        "enemySound":values["enemySound"]!
             ]
             collection.append(skin)
             index += 1
@@ -125,6 +126,7 @@ extension CharacterSkinCollectionViewController: CharacterSkinCellDelegate {
         defaults.set(skin["background"], forKey: BackgroundKey)
         defaults.set(textures, forKey: TexturesKey)
         defaults.set(skin["frames"], forKey: FramesKey)
+        defaults.set(skin["enemySound"], forKey: EnemySoundKey)
         configureDataForCollectionView()
     }
     

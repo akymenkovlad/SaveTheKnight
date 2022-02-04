@@ -29,6 +29,7 @@ let ProjectileKey = "PROJECTILE_TEXTURE"
 let ExtraProjectileKey = "EXTRA_PROJECTILE_TEXTURE"
 let TexturesKey = "TEXTURES"
 let FramesKey = "FRAMES_TEXTURES"
+let EnemySoundKey = "ENEMY_SOUND"
 
 let ArrowSpawnRate = 0.5
 let EnemySpawnRate = 15.0

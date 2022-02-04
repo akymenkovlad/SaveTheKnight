@@ -9,11 +9,7 @@ import SpriteKit
 
 public class EnemySprite : SKSpriteNode {
     
-    private let walkFrames = [
-        SKTexture(imageNamed: "god"),
-        SKTexture(imageNamed: "mummy")
-    ]
-    private let walkingActionKey = "action_walking"
+    private(set) var enemySound = ""
     private let movementSpeed: CGFloat = 200
     private var isMovingRight: Bool = true
     
@@ -33,6 +29,7 @@ public class EnemySprite : SKSpriteNode {
         enemy.physicsBody?.collisionBitMask = FloorCategory | PlayerCategory | WorldFrameCategory 
         enemy.physicsBody?.restitution = 0
         enemy.physicsBody?.mass = 100.0
+        enemy.enemySound = defaults.string(forKey: EnemySoundKey)!
         
         return enemy
     }
@@ -46,14 +43,6 @@ public class EnemySprite : SKSpriteNode {
     }
     
     public func update(deltaTime : TimeInterval) {
-//        if action(forKey: walkingActionKey) == nil {
-//            let walkingAction = SKAction.repeatForever(
-//                SKAction.animate(with: walkFrames,
-//                                 timePerFrame: 0.1,
-//                                 resize: false,
-//                                 restore: true))
-//            run(walkingAction, withKey:walkingActionKey)
-//        }
         if isMovingRight {
             //Move right
             physicsBody?.velocity.dx = movementSpeed

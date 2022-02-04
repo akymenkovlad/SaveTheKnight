@@ -10,7 +10,7 @@ import SpriteKit
 
 public class PlayerSprite : SKSpriteNode {
     
-    private let playerSound = "knight.wav"
+    private let playerSound = "player.wav"
     private var walkFrames: [SKTexture] = []
     private let walkingActionKey = "action_walking"
     private let movementSpeed: CGFloat = 300
