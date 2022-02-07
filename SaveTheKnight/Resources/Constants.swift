@@ -31,6 +31,6 @@ let TexturesKey = "TEXTURES"
 let FramesKey = "FRAMES_TEXTURES"
 let EnemySoundKey = "ENEMY_SOUND"
 
-let ArrowSpawnRate = 0.5
+let ArrowSpawnRate = 0.8
 let EnemySpawnRate = 15.0
 

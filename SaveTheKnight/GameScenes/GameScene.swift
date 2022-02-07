@@ -169,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             spawnGoldBonus()
         }
         //Update player Position
-        player.update(deltaTime: dt)
+        player.update()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {

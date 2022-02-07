@@ -16,13 +16,13 @@ public class EnemySprite : SKSpriteNode {
     public static func newInstance() -> EnemySprite {
         let defaults = UserDefaults.standard
         let texture = SKTexture(imageNamed: defaults.string(forKey: EnemyKey) ?? "bear")
-        let size = CGSize(width: texture.size().width * 0.15, height: texture.size().height * 0.15)
+        let size = CGSize(width: texture.size().width * 0.175, height: texture.size().height * 0.175)
         
         let enemy = EnemySprite(texture: texture, size: size)
         
         enemy.zPosition = 1
         enemy.name = "enemy"
-        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size )
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: enemy.size.width - 10, height: enemy.size.height - 10))
         enemy.physicsBody?.allowsRotation = false
         enemy.physicsBody?.categoryBitMask = EnemyCategory
         enemy.physicsBody?.contactTestBitMask = FloorCategory | PlayerCategory | WorldFrameCategory | InvulnerablePlayerCategory
