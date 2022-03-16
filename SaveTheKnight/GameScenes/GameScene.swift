@@ -235,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player = PlayerSprite.newInstance()
         player.addFrames()
-        player.updatePosition(point: CGPoint(x: frame.midX, y: floorNode.position.y + player.size.width/2+1))
+        player.updatePosition(point: CGPoint(x: frame.midX, y: floorNode.position.y + player.size.height/2+1))
         hud.resetPoints()
         addChild(player)
     }

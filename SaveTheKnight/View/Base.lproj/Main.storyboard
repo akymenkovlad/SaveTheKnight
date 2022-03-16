@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -44,21 +44,21 @@
                         </imageView>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="characterSkin" id="eJX-Ho-Fci" customClass="CharacterSkinCollectionViewCell" customModule="Save_the_Knight" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="225" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="q8J-iL-xac">
-                                    <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="225" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-Db-HWs">
-                                            <rect key="frame" x="45" y="10" width="160" height="170"/>
+                                            <rect key="frame" x="45" y="10" width="135" height="170"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="170" id="3tH-NL-B5T"/>
                                                 <constraint firstAttribute="width" constant="160" id="EQg-sm-hx8"/>
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-TJ-Bqp">
-                                            <rect key="frame" x="50" y="230" width="150" height="30"/>
+                                            <rect key="frame" x="50" y="230" width="125" height="30"/>
                                             <color key="backgroundColor" red="1" green="0.68235294120000001" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="6RH-he-PgV"/>
@@ -73,12 +73,12 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yt-N5-Utg">
-                                            <rect key="frame" x="50" y="190" width="150" height="35"/>
+                                            <rect key="frame" x="50" y="190" width="125" height="35"/>
                                             <fontDescription key="fontDescription" name="DevanagariSangamMN-Bold" family="Devanagari Sangam MN" pointSize="20"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xw5-5d-EBR">
-                                            <rect key="frame" x="50" y="265" width="150" height="30"/>
+                                            <rect key="frame" x="50" y="265" width="125" height="30"/>
                                             <color key="backgroundColor" systemColor="linkColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="RCk-i4-Mq1"/>
@@ -108,7 +108,7 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <size key="customSize" width="250" height="300"/>
+                                <size key="customSize" width="225" height="300"/>
                                 <connections>
                                     <outlet property="buyButton" destination="xw5-5d-EBR" id="YXg-rM-49X"/>
                                     <outlet property="characterSkinImageView" destination="ihj-Db-HWs" id="XtV-9e-idS"/>

@@ -36,7 +36,7 @@ public class PlayerSprite : SKSpriteNode {
         let player = PlayerSprite(texture: texture, size: size)
         
         player.zPosition = 1
-        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.height/2)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width / 3, center: CGPoint(x: 0, y: -player.size.height / 2 + player.size.width / 3))
         player.physicsBody?.allowsRotation = false
         player.physicsBody?.categoryBitMask = PlayerCategory
         player.physicsBody?.collisionBitMask = FloorCategory | WorldFrameCategory

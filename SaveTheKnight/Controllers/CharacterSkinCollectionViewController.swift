@@ -96,12 +96,12 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 350)
+        return CGSize(width: 100, height: 350)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        let leftInset = 50.0
+        let leftInset = 20.0
         let rightInset = leftInset
         
         return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
