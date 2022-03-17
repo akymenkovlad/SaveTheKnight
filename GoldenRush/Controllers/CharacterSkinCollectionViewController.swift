@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class CharacterSkinCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var coinAmount: UIButton!
@@ -18,13 +16,18 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.topItem?.title = "Shop"
+        self.navigationController?.navigationBar.barTintColor = .white
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black, NSAttributedString.Key.font: UIFont(name: "Devanagari Sangam MN Bold", size: 22)]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes as [NSAttributedString.Key : Any]
+
         let defaults = UserDefaults.standard
         
         let coins = defaults.integer(forKey: "userCoins")
         
-        let quote = "\(coins)"
+        let quote = " \(coins)"
         let font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        let attributes = [NSAttributedString.Key.font: font]
+        let attributes = [NSAttributedString.Key.font: font, NSAttributedString.Key.strokeColor: UIColor.black, NSAttributedString.Key.strokeWidth: -2] as [NSAttributedString.Key : Any]
         let attributedCoins = NSAttributedString(string: quote, attributes: attributes)
         coinAmount.setAttributedTitle(attributedCoins, for: .normal)
         coinAmount.isUserInteractionEnabled = false
@@ -61,6 +64,7 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
             self.collectionView.reloadData()
         }
     }
+    
     @IBAction func returnToMenu(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -91,57 +95,49 @@ class CharacterSkinCollectionViewController: UICollectionViewController, UIColle
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 350)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        let leftInset = 20.0
-        let rightInset = leftInset
-        
-        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+        return UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 50)
     }
     
 }
 extension CharacterSkinCollectionViewController: CharacterSkinCellDelegate {
-    func selectButtonTapped(at index: IndexPath, with skin: Dictionary<String, Any>) {
-        print("select \(index)")
+    func actionButtonTapped(at index: IndexPath, with skin: Dictionary<String, Any>,state: ShopButtonStates) {
         let defaults = UserDefaults.standard
-        let defaultSkin = defaults.string(forKey: CharacterKey)
-        let chosenSkin = skin["texture"] as! String
-        if let skin = textures.first(where: { $0.key == defaultSkin }) {
-            textures[skin.key]!["status"] = "bought"
-        }
-        textures[chosenSkin]!["status"] = "selected"
-        defaults.set(chosenSkin, forKey: CharacterKey)
-        defaults.set(skin["enemy"], forKey: EnemyKey)
-        defaults.set(skin["projectile"], forKey: ProjectileKey)
-        defaults.set(skin["extraProjectile"], forKey: ExtraProjectileKey)
-        defaults.set(skin["soil"], forKey: SoilKey)
-        defaults.set(skin["background"], forKey: BackgroundKey)
-        defaults.set(textures, forKey: TexturesKey)
-        defaults.set(skin["frames"], forKey: FramesKey)
-        defaults.set(skin["enemySound"], forKey: EnemySoundKey)
-        configureDataForCollectionView()
-    }
-    
-    func buyButtonTapped(at index: IndexPath, with skin: Dictionary<String, Any>) {
-        print("buy \(index)")
-        let chosenSkin = skin["texture"] as! String
-        let defaults = UserDefaults.standard
-        let coins = defaults.value(forKey: "userCoins") as! Int
-        if coins >= textures[chosenSkin]!["price"] as! Int {
-            textures[chosenSkin]!["status"] = "bought"
-            let currentCoins = coins - (textures[chosenSkin]!["price"] as! Int)
+        switch state {
+        case .selected:
+            break
+        case .bought:
+            let defaultSkin = defaults.string(forKey: CharacterKey)
+            let chosenSkin = skin["texture"] as! String
+            if let skin = textures.first(where: { $0.key == defaultSkin }) {
+                textures[skin.key]!["status"] = "bought"
+            }
+            textures[chosenSkin]!["status"] = "selected"
+            defaults.set(chosenSkin, forKey: CharacterKey)
+            defaults.set(skin["enemy"], forKey: EnemyKey)
+            defaults.set(skin["projectile"], forKey: ProjectileKey)
+            defaults.set(skin["extraProjectile"], forKey: ExtraProjectileKey)
+            defaults.set(skin["soil"], forKey: SoilKey)
+            defaults.set(skin["background"], forKey: BackgroundKey)
             defaults.set(textures, forKey: TexturesKey)
-            defaults.set(currentCoins, forKey: "userCoins")
-            coinAmount.setTitle("Coins:\(currentCoins)", for: .normal)
-            configureDataForCollectionView()
+            defaults.set(skin["frames"], forKey: FramesKey)
+            defaults.set(skin["enemySound"], forKey: EnemySoundKey)
+        case .onSale:
+            let chosenSkin = skin["texture"] as! String
+            let coins = defaults.value(forKey: "userCoins") as! Int
+            if coins >= textures[chosenSkin]!["price"] as! Int {
+                textures[chosenSkin]!["status"] = "bought"
+                let currentCoins = coins - (textures[chosenSkin]!["price"] as! Int)
+                defaults.set(textures, forKey: TexturesKey)
+                defaults.set(currentCoins, forKey: "userCoins")
+                let quote = " \(currentCoins)"
+                let font = UIFont.systemFont(ofSize: 25, weight: .bold)
+                let attributes = [NSAttributedString.Key.font: font, NSAttributedString.Key.strokeColor: UIColor.black, NSAttributedString.Key.strokeWidth: -2] as [NSAttributedString.Key : Any]
+                let attributedCoins = NSAttributedString(string: quote, attributes: attributes)
+                coinAmount.setAttributedTitle(attributedCoins, for: .normal)
+            }
         }
+        configureDataForCollectionView()
+        
     }
 }

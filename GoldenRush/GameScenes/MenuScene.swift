@@ -23,8 +23,8 @@ class MenuScene : SKScene {
     var shopButton: SKSpriteNode! = nil
     var background: SKSpriteNode! = nil
     
-    let logoNode = SKLabelNode(text: "Protect the Knight")
-    let highScoreNode = SKLabelNode(fontNamed: "CopperPlate")
+    let logoNode = SKLabelNode(text: "Golden Rush")
+    let highScoreNode = SKLabelNode(fontNamed: "Devanagari Sangam MN Bold")
     
     var selectedButton : SKSpriteNode?
     weak var transitonDelegate: TransitionDelegate?
@@ -40,29 +40,30 @@ class MenuScene : SKScene {
         //Setup logo - label initialized earlier
         logoNode.position = CGPoint(x: size.width / 2, y: size.height / 2 + 150)
         logoNode.verticalAlignmentMode = .top
-        logoNode.fontName = "CopperPlate"
+        logoNode.fontName = "Devanagari Sangam MN Bold"
         logoNode.fontSize = 70
+        logoNode.setTextWithStroke(color: .black, width: 2, text: logoNode.text!)
         addChild(logoNode)
         
         //Setup start button
         startButton = SKSpriteNode(texture: startButtonTexture)
         startButton.position = CGPoint(x: size.width / 2, y: size.height / 2 )
-        startButton.xScale = 0.4
-        startButton.yScale = 0.4
+        startButton.xScale = 0.3
+        startButton.yScale = 0.3
         addChild(startButton)
         
         let edgeMargin : CGFloat = 20
         //Setup sound button
         soundButton = SKSpriteNode(texture: SoundManager.sharedInstance.isMuted ? soundButtonTextureOff : soundButtonTexture)
-        soundButton.xScale = 0.5
-        soundButton.yScale = 0.5
+        soundButton.xScale = 0.4
+        soundButton.yScale = 0.4
         soundButton.position = CGPoint(x: size.width - soundButton.size.width / 2 - edgeMargin, y: soundButton.size.height / 2 + edgeMargin)
         addChild(soundButton)
         
         //Setup shop button
         shopButton = SKSpriteNode(texture: shopButtonTexture)
-        shopButton.xScale = 0.4
-        shopButton.yScale = 0.4
+        shopButton.xScale = 0.3
+        shopButton.yScale = 0.3
         shopButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - startButton.size.height - edgeMargin)
         addChild(shopButton)
         
@@ -76,6 +77,7 @@ class MenuScene : SKScene {
         highScoreNode.fontSize = 50
         highScoreNode.position = CGPoint(x: size.width / 2, y: shopButton.position.y - shopButton.size.height / 2 - 50)
         highScoreNode.zPosition = 1
+        highScoreNode.setTextWithStroke(color: .black, width: 2, text: highScoreNode.text!)
         addChild(highScoreNode)
     }
     

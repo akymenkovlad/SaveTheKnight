@@ -501,6 +501,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             invBody.node?.removeFromParent()
             invBody.node?.physicsBody = nil
             invBody.node?.removeAllActions()
+        case FloorCategory:
+            invBody.node?.physicsBody?.collisionBitMask = WorldFrameCategory
         default:
             break
         }
@@ -552,6 +554,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             goldBody.node?.removeFromParent()
             goldBody.node?.physicsBody = nil
             goldBody.node?.removeAllActions()
+        case FloorCategory:
+            goldBody.node?.physicsBody?.collisionBitMask = WorldFrameCategory
         default:
             break
         }

@@ -23,6 +23,7 @@
 		91227EE8279596DF00B79865 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91227EE7279596DF00B79865 /* MenuScene.swift */; };
 		916962B9279996160086C116 /* CharacterSkinCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916962B8279996160086C116 /* CharacterSkinCollectionViewController.swift */; };
 		916962BB27999B470086C116 /* CharacterSkinCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916962BA27999B470086C116 /* CharacterSkinCollectionViewCell.swift */; };
+		9171855C27E3078E0093E8CB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9171855B27E3078E0093E8CB /* Extensions.swift */; };
 		91A4ABC3279EBDC900A1852E /* EnemySprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC2279EBDC900A1852E /* EnemySprite.swift */; };
 		91A4ABC5279ECD0E00A1852E /* GoldBonusSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */; };
 		91A4ABC7279ECD9600A1852E /* InvulnerabilityBonusSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */; };
@@ -37,7 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		91227EB727954D6500B79865 /* Save the Knight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Save the Knight.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91227EB727954D6500B79865 /* Golden Rush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Golden Rush.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91227EBA27954D6500B79865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91227EC027954D6500B79865 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		91227EC527954D6500B79865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		91227EE7279596DF00B79865 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		916962B8279996160086C116 /* CharacterSkinCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkinCollectionViewController.swift; sourceTree = "<group>"; };
 		916962BA27999B470086C116 /* CharacterSkinCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkinCollectionViewCell.swift; sourceTree = "<group>"; };
+		9171855B27E3078E0093E8CB /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		91A4ABC2279EBDC900A1852E /* EnemySprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemySprite.swift; sourceTree = "<group>"; };
 		91A4ABC4279ECD0E00A1852E /* GoldBonusSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldBonusSprite.swift; sourceTree = "<group>"; };
 		91A4ABC6279ECD9600A1852E /* InvulnerabilityBonusSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvulnerabilityBonusSprite.swift; sourceTree = "<group>"; };
@@ -81,7 +83,7 @@
 		91227EAE27954D6400B79865 = {
 			isa = PBXGroup;
 			children = (
-				91227EB927954D6500B79865 /* SaveTheKnight */,
+				91227EB927954D6500B79865 /* GoldenRush */,
 				91227EB827954D6500B79865 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,12 +91,12 @@
 		91227EB827954D6500B79865 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				91227EB727954D6500B79865 /* Save the Knight.app */,
+				91227EB727954D6500B79865 /* Golden Rush.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		91227EB927954D6500B79865 /* SaveTheKnight */ = {
+		91227EB927954D6500B79865 /* GoldenRush */ = {
 			isa = PBXGroup;
 			children = (
 				91CA1B182796B7D700BB3F21 /* Particles */,
@@ -105,7 +107,7 @@
 				91227ED227954DCD00B79865 /* Controllers */,
 				91227ED127954DBE00B79865 /* GameScenes */,
 			);
-			path = SaveTheKnight;
+			path = GoldenRush;
 			sourceTree = "<group>";
 		};
 		91227ED127954DBE00B79865 /* GameScenes */ = {
@@ -156,6 +158,7 @@
 				91227EBA27954D6500B79865 /* AppDelegate.swift */,
 				91227ED62795616100B79865 /* Constants.swift */,
 				91227EE32795925B00B79865 /* SoundManager.swift */,
+				9171855B27E3078E0093E8CB /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -187,9 +190,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		91227EB627954D6500B79865 /* SaveTheKnight */ = {
+		91227EB627954D6500B79865 /* GoldenRush */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 91227ECE27954D6600B79865 /* Build configuration list for PBXNativeTarget "SaveTheKnight" */;
+			buildConfigurationList = 91227ECE27954D6600B79865 /* Build configuration list for PBXNativeTarget "GoldenRush" */;
 			buildPhases = (
 				91227EB327954D6500B79865 /* Sources */,
 				91227EB427954D6500B79865 /* Frameworks */,
@@ -199,9 +202,9 @@
 			);
 			dependencies = (
 			);
-			name = SaveTheKnight;
+			name = GoldenRush;
 			productName = SaveTheKnight;
-			productReference = 91227EB727954D6500B79865 /* Save the Knight.app */;
+			productReference = 91227EB727954D6500B79865 /* Golden Rush.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -219,7 +222,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 91227EB227954D6400B79865 /* Build configuration list for PBXProject "SaveTheKnight" */;
+			buildConfigurationList = 91227EB227954D6400B79865 /* Build configuration list for PBXProject "GoldenRush" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -232,7 +235,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				91227EB627954D6500B79865 /* SaveTheKnight */,
+				91227EB627954D6500B79865 /* GoldenRush */,
 			);
 		};
 /* End PBXProject section */
@@ -275,6 +278,7 @@
 				91227ED9279561EC00B79865 /* PlayerSprite.swift in Sources */,
 				91227ED72795616100B79865 /* Constants.swift in Sources */,
 				91F39EE827AD6DF60042257F /* GameViewController.swift in Sources */,
+				9171855C27E3078E0093E8CB /* Extensions.swift in Sources */,
 				91227EE42795925B00B79865 /* SoundManager.swift in Sources */,
 				91227EDB2795742C00B79865 /* CoinSprite.swift in Sources */,
 				91A4ABC7279ECD9600A1852E /* InvulnerabilityBonusSprite.swift in Sources */,
@@ -433,16 +437,17 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vlad-Akymenko.SaveTheKnight";
-				PRODUCT_NAME = "Save the Knight";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Vlad-Akymenko.goldenrush";
+				PRODUCT_NAME = "Golden Rush";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -462,16 +467,17 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Vlad-Akymenko.SaveTheKnight";
-				PRODUCT_NAME = "Save the Knight";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Vlad-Akymenko.goldenrush";
+				PRODUCT_NAME = "Golden Rush";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -481,7 +487,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		91227EB227954D6400B79865 /* Build configuration list for PBXProject "SaveTheKnight" */ = {
+		91227EB227954D6400B79865 /* Build configuration list for PBXProject "GoldenRush" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				91227ECC27954D6600B79865 /* Debug */,
@@ -490,7 +496,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		91227ECE27954D6600B79865 /* Build configuration list for PBXNativeTarget "SaveTheKnight" */ = {
+		91227ECE27954D6600B79865 /* Build configuration list for PBXNativeTarget "GoldenRush" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				91227ECF27954D6600B79865 /* Debug */,

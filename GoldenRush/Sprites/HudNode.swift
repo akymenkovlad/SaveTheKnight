@@ -9,7 +9,7 @@ import SpriteKit
 
 class HudNode : SKNode {
     private let scoreKey = "SAVEKNIGHT_HIGHSCORE"
-    private let scoreNode = SKLabelNode(fontNamed: "Copperplate")
+    private let scoreNode = SKLabelNode(fontNamed: "Devanagari Sangam MN Bold")
     private(set) var score : Int = 0
     private var highScore : Int = 0
     private var showingHighScore = false
@@ -24,7 +24,7 @@ class HudNode : SKNode {
     
     private var coin : SKSpriteNode!
     private let coinTexture = SKTexture(imageNamed: "coin")
-    private let coinAmount = SKLabelNode(fontNamed: "Copperplate")
+    private let coinAmount = SKLabelNode(fontNamed: "Devanagari Sangam MN Bold")
     private var coins: Int = UserDefaults.standard.value(forKey: "userCoins") as! Int
     
     //Setup hud here
@@ -34,9 +34,10 @@ class HudNode : SKNode {
         highScore = defaults.integer(forKey: scoreKey)
         
         scoreNode.text = "\(score)"
-        scoreNode.fontColor = .orange
+        scoreNode.fontColor = .white
         scoreNode.fontSize = 50
         scoreNode.position = CGPoint(x: size.width / 2, y: size.height - 50)
+        scoreNode.setTextWithStroke(color: .black, width: 2, text: "\(score)")
         scoreNode.zPosition = 1
         
         quitButton = SKSpriteNode(texture: quitButtonTexture)
@@ -63,7 +64,7 @@ class HudNode : SKNode {
         coin.position = CGPoint(x: size.width/20, y: healthPoints[0].position.y - 40)
         coin.zPosition = 1000
         
-        coinAmount.text = "\(coins)"
+        coinAmount.setTextWithStroke(color: .black, width: 2,text: "\(coins)")
         coinAmount.fontSize = 30
         coinAmount.position = CGPoint(x: coin.position.x + 25 + coinAmount.frame.width/2, y: healthPoints[0].position.y - 50)
         coinAmount.zPosition = 1000
@@ -77,7 +78,7 @@ class HudNode : SKNode {
     public func updateUserCoins() {
         let defaults = UserDefaults.standard
         coins = defaults.value(forKey: "userCoins") as! Int
-        coinAmount.text = "\(coins)"
+        coinAmount.setTextWithStroke(color: .black, width: 2,text: "\(coins)")
     }
     
     public func addPoint() {
@@ -105,7 +106,7 @@ class HudNode : SKNode {
     }
     
     private func updateScoreboard() {
-        scoreNode.text = "\(score)"
+        scoreNode.setTextWithStroke(color: .black, width: 2,text: "\(score)")
     }
     
     public func isLose() -> Bool {

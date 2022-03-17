@@ -8,8 +8,7 @@
 import UIKit
 
 protocol CharacterSkinCellDelegate: AnyObject {
-    func selectButtonTapped(at index:IndexPath, with skin:Dictionary<String,Any>)
-    func buyButtonTapped(at index:IndexPath, with skin:Dictionary<String,Any>)
+    func actionButtonTapped(at index:IndexPath, with skin:Dictionary<String,Any>, state: ShopButtonStates)
 }
 
 class CharacterSkinCollectionViewCell: UICollectionViewCell {
@@ -18,57 +17,62 @@ class CharacterSkinCollectionViewCell: UICollectionViewCell {
     var delegate: CharacterSkinCellDelegate?
     var indexPath: IndexPath!
     var skin: Dictionary<String,Any>!
+    var state: ShopButtonStates!
     
-    @IBOutlet weak var selectButton: UIButton!
-    @IBOutlet weak var buyButton: UIButton!
+    
+    @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var characterSkinImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.buyButton.addTarget(self, action: #selector(buyButtonTapped(_:)), for: .touchUpInside)
-        self.selectButton.addTarget(self, action: #selector(selectButtonTapped(_:)), for: .touchUpInside)
-        buyButton.layer.cornerRadius = buyButton.frame.height / 2
-        selectButton.layer.cornerRadius = selectButton.frame.height / 2
+        self.backgroundColor = .clear
+        self.actionButton.addTarget(self, action: #selector(actionButtonTapped(_:)), for: .touchUpInside)
+        actionButton.layer.cornerRadius = actionButton.frame.height * 0.2
+        infoLabel.textColor = .white
+        infoLabel.addStroke(color: .black, width: 2)
     }
     
     func configure() {
         let image = UIImage(named: skin["texturePack"] as! String)!
         let price = skin["price"] as! Int
         let name = skin["name"] as! String
+        
+        switch skin["status"] as! String {
+        case "bought":
+            state = .bought
+        case "onSale":
+            state = .onSale
+        case "selected":
+            state = .selected
+        default:
+            break
+        }
+        
         characterSkinImageView.image = image
-        infoLabel.text = """
+        infoLabel.text =
+        """
         \(name)
         Price:\(price)
         """
         if skin["status"] as! String == "bought" {
-            buyButton.isHidden = true
-            selectButton.isHidden = false
-            selectButton.setTitle("Select", for: .normal)
-            selectButton.backgroundColor = .systemYellow
+            actionButton.setTitle("Select", for: .normal)
+            actionButton.backgroundColor = .systemYellow
         } else if skin["status"] as! String == "onSale" {
-            buyButton.isHidden = false
-            selectButton.isHidden = true
-            selectButton.setTitle("Select", for: .normal)
-            selectButton.backgroundColor = .systemYellow
+            actionButton.setTitle("Buy", for: .normal)
+            actionButton.backgroundColor = .systemBlue
         } else if skin["status"] as! String == "selected" {
-            buyButton.isHidden = true
-            selectButton.isHidden = false
-            selectButton.setTitle("Selected ✓", for: .normal)
-            selectButton.backgroundColor = .systemGreen
+            actionButton.setTitle("Selected ✓", for: .normal)
+            actionButton.backgroundColor = .systemGreen
         }
         shadowDecorate()
-        
     }
-    
-    @IBAction func selectButtonTapped(_ sender: Any) {
-        delegate?.selectButtonTapped(at: indexPath, with: skin)
-    }
-    @IBAction func buyButtonTapped(_ sender: Any) {
-        delegate?.buyButtonTapped(at: indexPath, with: skin)
+
+    @IBAction func actionButtonTapped(_ sender: Any) {
+        delegate?.actionButtonTapped(at: indexPath, with: skin, state: state)
     }
 }
-extension UICollectionViewCell {
+extension CharacterSkinCollectionViewCell {
     func shadowDecorate() {
         let radius: CGFloat = 10
         contentView.layer.cornerRadius = radius
@@ -81,8 +85,9 @@ extension UICollectionViewCell {
         layer.shadowRadius = 2.0
         layer.shadowOpacity = 0.5
         layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: -1, y: -10),
+                                                            size: CGSize(width: 227, height: 320)),
+                                        cornerRadius: radius).cgPath
         layer.cornerRadius = radius
     }
 }
-

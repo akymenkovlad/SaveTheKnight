@@ -34,3 +34,8 @@ let EnemySoundKey = "ENEMY_SOUND"
 let ArrowSpawnRate = 0.8
 let EnemySpawnRate = 15.0
 
+enum ShopButtonStates {
+     case selected
+     case bought
+     case onSale
+}
